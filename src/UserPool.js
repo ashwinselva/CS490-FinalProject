@@ -14,6 +14,8 @@ export default function UserPool(){
     
     function onConfirmButton(){
         setConfirmed((prevShown) => !prevShown);
+        const userText = inputRef.current.value;
+        
     }
     
     
