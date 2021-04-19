@@ -14,7 +14,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 # Gets rid of a warning
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-DB = SQLAlchemy(app)
+db = SQLAlchemy(app)
 
 CORS = CORS(app, resources={r"/*": {"origins": "*"}})
 
