@@ -3,6 +3,8 @@ import './App.css';
 import React, { useState, useRef, useEffect } from 'react';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import Upload from './Upload';
+import ImgDrop from './imgDrop';
 
 function App() {
   
@@ -77,6 +79,8 @@ function App() {
       </button>
       
       <h1><button>Play Game</button></h1>
+      <Upload />
+      <ImgDrop/>
     </div>
   );
 }
