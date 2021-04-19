@@ -3,25 +3,26 @@ from flask import Flask, send_from_directory
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv, find_dotenv
-import models
+import model
 
 load_dotenv(find_dotenv())  # This is to load your env variables from .env
 
-APP = Flask(__name__, static_folder='./build/static')
+app = Flask(__name__, static_folder='./build/static')
 
 # Point SQLAlchemy to your Heroku database
-APP.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 # Gets rid of a warning
-APP.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-DB = SQLAlchemy(APP)
+DB = SQLAlchemy(app)
 
-CORS = CORS(APP, resources={r"/*": {"origins": "*"}})
+CORS = CORS(app, resources={r"/*": {"origins": "*"}})
 
-SOCKETIO = SocketIO(APP,
-                    cors_allowed_origins="*",
-                    json=json,
-                    manage_session=False)
+
+#SOCKETIO = SocketIO(app,
+#                    cors_allowed_origins="*",
+#                    json=json,
+#                    manage_session=False)
 
 
 @app.route('/', defaults={"filename": "index.html"})
