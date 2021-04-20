@@ -92,7 +92,7 @@ def get_images(pool_Name):
         for i in pool_images:
             pool_images[i] = Images.query.get(pool_images[i].image_id).image_url
             
-        return True
+        return pool_images
     finally:
         return False
 
@@ -102,7 +102,7 @@ def get_pools(user_name):
         for i in pool_images:
             pools[i] = pools[i].pool_name
             
-        return True
+        return pools
     finally:
         return False
 
