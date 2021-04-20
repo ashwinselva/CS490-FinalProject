@@ -10,15 +10,15 @@ import UserPool from './UserPool';
 const socket=io()
 
 export function ViewPools() {
-  const [allPools, setAllPools] = useState([]);
+  const [allPools, setAllPools] = useState({});
   
   function getPoolNames(){
-      socket.emit('viewpools', ['nonexistuser'])
+      socket.emit('viewpools', [])
   }
     useEffect(() => {
     socket.on('reponse', (data) => {
-        const newArray= [...data]
-        setAllPools(newArray)
+        const newDict= [...data]
+        setAllPools(newDict)
     });
     
   }, []);

@@ -3,10 +3,7 @@ import io from 'socket.io-client';
 
 const socket = io();
 
-function ImgDrop({
-    poolName,
-    addPhotos,
-}) {
+function ImgDrop(props) {
     const [inZone, setInZone] = useState(false);
     const [fileList, setFileList] = useState([]);
     
@@ -14,7 +11,7 @@ function ImgDrop({
         const formData = new FormData()
         console.log(file)
         formData.append('myFile', file)
-        socket.emit('new_user_pool', [poolName])
+        socket.emit('new_user_pool', [props.poolName, props.username])
         
         
         fetch('/saveImage', {
