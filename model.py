@@ -10,7 +10,7 @@ class Image(db.Model):
     __tablename__ = 'Images'
     image_id = db.Column(db.Integer, primary_key=True)
     image_name = db.Column(db.String(80), unique=True, nullable=False)
-    image_location = db.Column(db.String(80), unique=True, nullable=False)
+    image_url = db.Column(db.String(80), unique=True, nullable=False)
 #    tags=db.relationship('Tags',secondary=imagetags, lazy='subquery', backref=db.backref('image', lazy=True))
 
     def __repr__(self):
@@ -35,7 +35,7 @@ class Pool(db.Model):
 class PoolItem(db.Model):
     __tablename__ = 'PoolItems'
     pool_name = db.Column(db.String(80), primary_key=True)
-    image_id = db.Column(db.Integer, primary_key=True)
+    image_id = db.Column(db.Integer, primary_key=True, autoincrement=False)
     
     def __repr__(self):
         return '<PoolImage %r>' % (self.pool_name)
