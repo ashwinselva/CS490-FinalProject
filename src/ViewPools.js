@@ -13,7 +13,7 @@ export function ViewPools() {
   const [allPools, setAllPools] = useState([]);
   
   function getPoolNames(){
-      socket.emit('viewpools', {})
+      socket.emit('viewpools', ['nonexistuser'])
   }
     useEffect(() => {
     socket.on('reponse', (data) => {
