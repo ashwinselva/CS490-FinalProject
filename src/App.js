@@ -89,7 +89,8 @@ function App() {
     <h1 style={{float: 'left', display: 'inline-block'}}>Arachne</h1>
     <h4 style={{float: 'right', display: 'inline'}}>
     {
-    isLogin === false?(
+    (isLogin === false)?(
+    <div>
     {
     isNewUserClicked === false?(
     <div>
@@ -153,7 +154,8 @@ function App() {
     
     
     <br />
-    ):(<p>{username}</p>)
+    </div>
+    ):(<lable>{username}</lable>)
     }
     
     </h4>
