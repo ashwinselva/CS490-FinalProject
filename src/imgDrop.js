@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 function ImgDrop({
-    poolID,
+    poolName,
     socket,
     addPhotos,
 }) {
@@ -12,6 +12,7 @@ function ImgDrop({
         const formData = new FormData()
         console.log(file)
         formData.append('myFile', file)
+        formData.append('poolName', poolName)
       
         fetch('/saveImage', {
             method: 'POST',

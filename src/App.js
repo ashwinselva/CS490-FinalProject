@@ -80,7 +80,7 @@ function App() {
       
       <h1><button>Play Game</button></h1>
       <Upload />
-      <ImgDrop/>
+      <ImgDrop poolName = "test"/>
     </div>
   );
 }
