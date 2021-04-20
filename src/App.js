@@ -89,6 +89,8 @@ function App() {
     <h1 style={{float: 'left', display: 'inline-block'}}>Arachne</h1>
     <h4 style={{float: 'right', display: 'inline'}}>
     {
+    isLogin === false?(
+    {
     isNewUserClicked === false?(
     <div>
     <button onClick={()=>changeLoginClick()}>Login</button>
@@ -149,8 +151,10 @@ function App() {
     ):(null)
     }
     
-    <br />
     
+    <br />
+    ):(<p>{username}</p>)
+    }
     
     </h4>
     </div>
