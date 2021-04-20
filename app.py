@@ -168,7 +168,7 @@ def on_login(data):
     
     sid = request.sid
     
-    result = check_login(password, username)
+    result = check_login(username, password)
     
     if result:
         SOCKETIO.emit('loginSuccess', {}, broadcast=True, room=sid)
