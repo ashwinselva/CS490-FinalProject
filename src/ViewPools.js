@@ -27,9 +27,7 @@ export function ViewPools() {
     <div>
     <button onClick={getPoolNames}>View all pools</button>
     <div>
-      {allPools.map(pool => (
-        <li>{pool}</li>
-      ))}
+
      </div>
      </div>
       
