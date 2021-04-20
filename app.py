@@ -88,6 +88,12 @@ def reassign_image(image_id, pool_name):
 
 def image_URL(image_url):
     return 'https://storage.googleapis.com/' + GBUCKET + '/' + image_url
+    
+def check_login(username, password):
+    query = User.query.filter_by(username=username).first()
+    if query is None:
+        return False
+    return password == query.password
 
 @app.route('/', defaults={"filename": "index.html"})
 @app.route('/<path:filename>')
@@ -116,6 +122,54 @@ def upload_image():
     blob.upload_from_filename(img.filename)
     os.remove(img.filename)
     blob.make_public()
+    
+@SOCKETIO.on('connect')
+def on_connect():
+    """Triggered when a user connects"""
+
+    print('User connected')
+
+
+@SOCKETIO.on('disconnect')
+def on_disconnect():
+    """Triggered when a user disconnects"""
+
+    print('User disconnected')
+    
+@SOCKETIO.on('login')
+def on_login(data):
+    """Triggered when a user logs in"""
+    
+    username = str(data['username'])
+    password = str(data['password'])
+    
+    sid = request.sid
+    
+    result = check_login(password, username)
+    
+    if result:
+        SOCKETIO.emit('loginSuccess', {}, room=sid)
+    else:
+        SOCKETIO.emit('loginFailed', {}, room=sid)
+    print('User disconnected')
+    
+@SOCKETIO.on('newUser')
+def on_new_user(data):
+    """Triggered when a user logs in"""
+    
+    username = str(data['username'])
+    password = str(data['password'])
+    
+    sid = request.sid
+    
+    result = check_login(password, username)
+    
+    if result:
+        SOCKETIO.emit('loginSuccess', {}, room=sid)
+    else:
+        SOCKETIO.emit('loginFailed', {}, room=sid)
+    print('User disconnected')
+
 
 SOCKETIO.run(
         app,
