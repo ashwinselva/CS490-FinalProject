@@ -30,6 +30,7 @@ function App() {
     const password=inputRefPassword.current.value;
     console.log(username);
     console.log(password);
+    changeLogin()
      socket.emit('login',{user:username,password:password});
     
     }
@@ -78,7 +79,6 @@ function App() {
   
   return (
   <div>
-    {isLogin === false ? (
       <div className="App">
       <div>
       <h1 style={{float: 'left', display: 'inline-block'}}>Arachne</h1>
@@ -88,19 +88,19 @@ function App() {
         <button onClick={()=>changeLoginClick()}>Login</button>
       <div>
       {isLoginClicked === true?
-        (
-          <form> <br />
-          <label>
-            Login-ID:
-            <input ref={inputRefUser} type="text"/>
-          </label><br />
-          <label>
-          Password
-            <input type="password" ref={inputRefPassword} />
-          </label><br />
-          <input type="submit" value="Submit" onClick={onClick} />
-          <br />
-        </form>
+        ( 
+            <form> <br />
+            <label>
+              Login-ID:
+              <input ref={inputRefUser} type="text"/>
+            </label><br />
+            <label>
+            Password
+              <input type="password" ref={inputRefPassword} />
+            </label><br />
+            <input type="submit" value="Submit" onClick={onClick} />
+            <br />
+          </form>
         ):
         (null)
       }
@@ -147,15 +147,15 @@ function App() {
           <button type="button" onClick={onSearch}>
             Search
           </button>
-          
-          <h1><button>Play Game</button></h1>
-          <Upload />
-        </div>
-        ):(
+      
           <div>
             <UserPool/>
           </div>
-        )}
+
+          <h1><button>Play Game</button></h1>
+          <Upload />
+        </div>
+      
     </div>
     );
 }
