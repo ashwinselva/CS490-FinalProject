@@ -140,7 +140,9 @@ def on_disconnect():
 def on_login(data):
     """Triggered when a user logs in"""
     
-    username = str(data['username'])
+    print("Login")
+    
+    username = str(data['user'])
     password = str(data['password'])
     
     sid = request.sid
@@ -151,13 +153,14 @@ def on_login(data):
         SOCKETIO.emit('loginSuccess', {}, room=sid)
     else:
         SOCKETIO.emit('loginFailed', {}, room=sid)
-    print('User disconnected')
     
 @SOCKETIO.on('newUser')
 def on_new_user(data):
-    """Triggered when a user logs in"""
+    """Triggered when a user adds an account"""
     
-    username = str(data['username'])
+    print("New User")
+    
+    username = str(data['user'])
     password = str(data['password'])
     
     sid = request.sid
@@ -168,7 +171,6 @@ def on_new_user(data):
         SOCKETIO.emit('loginSuccess', {}, room=sid)
     else:
         SOCKETIO.emit('loginFailed', {}, room=sid)
-    print('User disconnected')
 
 
 SOCKETIO.run(

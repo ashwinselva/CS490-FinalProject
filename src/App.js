@@ -80,8 +80,9 @@ function App() {
   useEffect(() => {
     socket.on('loginSuccess', (data) => {
       setLogin(true);
+      console.log('success');
     });
-  });
+  }, []);
   
   return (
     <div className="App">
