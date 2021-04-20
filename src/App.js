@@ -5,6 +5,8 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import Upload from './Upload';
 import io from 'socket.io-client';
+import UserPool from './UserPool';
+
 
 
 const socket = io(); // Connects to socket connection
@@ -15,6 +17,7 @@ function App() {
   const [isLogin,setLogin]=useState(false);
   const [isLoginClicked,setLoginClicked]=useState(false);
   const [isNewUserClicked,setNewUserClicked]=useState(false);
+  const [username, setUsername]=useState('');
 
   
   const inputRef = useRef(null);
@@ -28,7 +31,8 @@ function App() {
     const password=inputRefPassword.current.value;
     console.log(username);
     console.log(password);
-     socket.emit('login',{user:username,password:password});
+    socket.emit('login',{user:username,password:password});
+    setUsername(username)
     
     }
 
@@ -37,7 +41,8 @@ function App() {
     const password=inputNewUserPassword.current.value;
     console.log(username);
     console.log(password);
-     socket.emit('newUser',{user:username,password:password});
+    socket.emit('newUser',{user:username,password:password});
+    setUsername(username)
     
     }
 
@@ -74,11 +79,22 @@ function App() {
     });
   }
   
+  useEffect(() => {
+    socket.on('loginSuccess', (data) => {
+      setLogin(true);
+      console.log('success');
+    });
+  }, []);
+  
   return (
+
     <div className="App">
     <div>
     <h1 style={{float: 'left', display: 'inline-block'}}>Arachne</h1>
     <h4 style={{float: 'right', display: 'inline'}}>
+    {
+    (isLogin === false)?(
+    <div>
     {
     isNewUserClicked === false?(
     <div>
@@ -86,8 +102,7 @@ function App() {
     <div>
     {
       isLoginClicked === true?
-      (
-        <form>
+      (<div>
         <br />
   <label>
     Login-ID:
@@ -97,9 +112,9 @@ function App() {
   Password
     <input type="password" ref={inputRefPassword} />
   </label><br />
-  <input type="submit" value="Submit" onClick={onClick} />
+  <button type="submit" value="Submit" onClick={onClick} />
   <br />
-</form>
+  </div>
       ):
       (null)
     }
@@ -119,7 +134,7 @@ function App() {
     {
       isNewUserClicked === true?
       (
-        <form>
+        <div>
         <br />
   <label>
     User-ID:
@@ -131,7 +146,7 @@ function App() {
   </label><br />
   <input type="submit" value="Submit" onClick={newUser} />
   <br />
-</form>
+</div>
       ):
       (null)
     }
@@ -140,8 +155,11 @@ function App() {
     ):(null)
     }
     
-    <br />
     
+    <br />
+    </div>
+    ):(<lable>{username}</lable>)
+    }
     
     </h4>
     </div>
@@ -155,10 +173,8 @@ function App() {
         Search
       </button>
       
-      <h1><button>Play Game</button></h1>
-      <Upload />
     </div>
-  );
+    );
 }
 
 export default App;
