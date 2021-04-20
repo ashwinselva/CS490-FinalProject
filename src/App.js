@@ -4,14 +4,43 @@ import React, { useState, useRef, useEffect } from 'react';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import Upload from './Upload';
-import ImgDrop from './imgDrop';
+import io from 'socket.io-client';
+
+
+const socket = io(); // Connects to socket connection
+
 
 function App() {
   
   const [isLogin,setLogin]=useState(false);
   const [isLoginClicked,setLoginClicked]=useState(false);
+  const [isNewUserClicked,setNewUserClicked]=useState(false);
+
   
-  const inputRef = useRef(null); 
+  const inputRef = useRef(null);
+  const inputRefUser = useRef(null); 
+  const inputRefPassword = useRef(null); 
+  const inputNewUser = useRef(null); 
+  const inputNewUserPassword = useRef(null); 
+
+  function onClick(){
+    const username=inputRefUser.current.value;
+    const password=inputRefPassword.current.value;
+    console.log(username);
+    console.log(password);
+     socket.emit('login',{user:username,password:password});
+    
+    }
+
+  function newUser(){
+    const username=inputNewUser.current.value;
+    const password=inputNewUserPassword.current.value;
+    console.log(username);
+    console.log(password);
+     socket.emit('newUser',{user:username,password:password});
+    
+    }
+
   const options = [
   'Keyword', 'Tag', 'Random Images'
   ];
@@ -38,12 +67,21 @@ function App() {
     });
   }
   
+  function changeNewUserClick(){
+    console.log("button clicked");
+    setNewUserClicked((prevLogin)=> {
+      return !prevLogin;
+    });
+  }
+  
   return (
     <div className="App">
     <div>
     <h1 style={{float: 'left', display: 'inline-block'}}>Arachne</h1>
     <h4 style={{float: 'right', display: 'inline'}}>
-    
+    {
+    isNewUserClicked === false?(
+    <div>
     <button onClick={()=>changeLoginClick()}>Login</button>
     <div>
     {
@@ -53,19 +91,58 @@ function App() {
         <br />
   <label>
     Login-ID:
-    <input type="text" name="name" />
+    <input ref={inputRefUser} type="text"/>
   </label><br />
   <label>
   Password
-    <input type="password" name="password" />
+    <input type="password" ref={inputRefPassword} />
   </label><br />
-  <input type="submit" value="Submit" />
+  <input type="submit" value="Submit" onClick={onClick} />
   <br />
 </form>
       ):
       (null)
     }
     </div>
+    </div>
+    ):(null)
+    }
+    
+    <br />
+    
+    
+    {
+    isLoginClicked === false?(
+    <div>
+    <button onClick={()=>changeNewUserClick()}>New User</button>
+    <div>
+    {
+      isNewUserClicked === true?
+      (
+        <form>
+        <br />
+  <label>
+    User-ID:
+    <input ref={inputNewUser} type="text"/>
+  </label><br />
+  <label>
+  Password
+    <input type="password" ref={inputNewUserPassword} />
+  </label><br />
+  <input type="submit" value="Submit" onClick={newUser} />
+  <br />
+</form>
+      ):
+      (null)
+    }
+    </div>
+    </div>
+    ):(null)
+    }
+    
+    <br />
+    
+    
     </h4>
     </div>
       <div style={{clear: 'both'}}>
@@ -80,7 +157,6 @@ function App() {
       
       <h1><button>Play Game</button></h1>
       <Upload />
-      <ImgDrop poolName = "test"/>
     </div>
   );
 }
