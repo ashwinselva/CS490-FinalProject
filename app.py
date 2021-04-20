@@ -141,7 +141,7 @@ def upload_image():
 def on_new_user_pool(data):
     global pool_name
     pool_name = str(data[0])
- 
+
     
 @SOCKETIO.on('connect')
 def on_connect():
