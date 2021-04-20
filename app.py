@@ -123,6 +123,7 @@ def index(filename):
 @app.route('/saveImage', methods=['POST'])
 def upload_image():
     print('image received')
+    global GBUCKET
     global pool_name
     print(pool_name)
     storage_client = storage.Client()
