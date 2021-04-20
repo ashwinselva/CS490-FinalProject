@@ -162,7 +162,7 @@ function App() {
     ):(
     <div>
       <lable>{username}</lable>
-      <UserPool/>
+      <UserPool username={username}/>
     </div>
     )
     }
@@ -178,7 +178,7 @@ function App() {
       <button type="button" onClick={onSearch}>
         Search
       </button>
-      <ViewPools />
+      <ViewPools username={username}/>
       
     </div>
     );
