@@ -86,6 +86,16 @@ def reassign_image(image_id, pool_name):
     finally:
         return False
 
+def get_images(pool_Name):
+    try:
+        pool_images = PoolItems.query.filter_by(pool_name=pool_Name).all()
+        for i in pool_images:
+            pool_images[i] = Images.query.get(pool_images[i].image_id).image_url
+            
+        return True
+    finally:
+        return False
+
 def image_URL(image_url):
     return 'https://storage.googleapis.com/' + GBUCKET + '/' + image_url
     
