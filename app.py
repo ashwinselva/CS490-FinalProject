@@ -93,9 +93,19 @@ def index(filename):
 @app.route('/saveImage', methods=['POST'])
 def upload_image():
     print('image received')
+    pool_name = request.args['poolName']
+    image_name = None
+    
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(GBUCKET)
     img = request.files['myFile']
+    if 'imageName' in request.args:
+        file_type = img.filename.split('.')[-1]
+        image_name = request.args['imageName'] + '.' + file_type
+    else:
+        image_name = img.filename
+    if pool_name != 'test':
+        add_image(image_name, image_name, pool_name)
     img.save(secure_filename(img.filename))
     blob = bucket.blob(img.filename) 
     blob.upload_from_filename(img.filename)
