@@ -6,6 +6,7 @@ import 'react-dropdown/style.css';
 import Upload from './Upload';
 import io from 'socket.io-client';
 import UserPool from './UserPool';
+import ViewPools from './ViewPools';
 
 
 
@@ -161,7 +162,7 @@ function App() {
     ):(
     <div>
       <lable>{username}</lable>
-      <UserPool/>
+      <UserPool username={username}/>
     </div>
     )
     }
@@ -177,6 +178,7 @@ function App() {
       <button type="button" onClick={onSearch}>
         Search
       </button>
+      <ViewPools username={username}/>
       
     </div>
     );

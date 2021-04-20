@@ -6,18 +6,14 @@ import io from 'socket.io-client';
 
 const socket = io();
 
-function Upload({
-    poolName,
-    addPhotos,
-}
-  ) {
+function Upload(props) {
   
 const changeHandler = (event) => {
   const files = event.target.files
   const formData = new FormData()
   console.log(files[0])
   formData.append('myFile', files[0])
-  socket.emit('new_user_pool', [poolName])
+  socket.emit('new_user_pool', [props.poolName, props.username])
   
   fetch('/saveImage', {
     method: 'POST',
