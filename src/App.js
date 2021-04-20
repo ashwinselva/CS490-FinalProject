@@ -17,6 +17,7 @@ function App() {
   const [isLogin,setLogin]=useState(false);
   const [isLoginClicked,setLoginClicked]=useState(false);
   const [isNewUserClicked,setNewUserClicked]=useState(false);
+  const [username, setUsername]=useState('');
 
   
   const inputRef = useRef(null);
@@ -30,7 +31,8 @@ function App() {
     const password=inputRefPassword.current.value;
     console.log(username);
     console.log(password);
-     socket.emit('login',{user:username,password:password});
+    socket.emit('login',{user:username,password:password});
+    setUsername(username)
     
     }
 
@@ -39,7 +41,8 @@ function App() {
     const password=inputNewUserPassword.current.value;
     console.log(username);
     console.log(password);
-     socket.emit('newUser',{user:username,password:password});
+    socket.emit('newUser',{user:username,password:password});
+    setUsername(username)
     
     }
 
@@ -76,84 +79,99 @@ function App() {
     });
   }
   
+  useEffect(() => {
+    socket.on('loginSuccess', (data) => {
+      setLogin(true);
+      console.log('success');
+    });
+  }, []);
+  
   return (
-  <div>
-      <div className="App">
-      <div>
-      <h1 style={{float: 'left', display: 'inline-block'}}>Arachne</h1>
-      <h4 style={{float: 'right', display: 'inline'}}>
-      {isNewUserClicked === false?(
-      <div>
-        <button onClick={()=>changeLoginClick()}>Login</button>
-      <div>
-      {isLoginClicked === true?
-        ( 
-            <form> <br />
-            <label>
-              Login-ID:
-              <input ref={inputRefUser} type="text"/>
-            </label><br />
-            <label>
-            Password
-              <input type="password" ref={inputRefPassword} />
-            </label><br />
-            <input type="submit" value="Submit" onClick={onClick} />
-            <br />
-          </form>
-        ):
-        (null)
-      }
-        </div>
-        </div>
-        ):(null)
-      }
-      <br />
-      {isLoginClicked === false?(
-      <div>
-        <button onClick={()=>changeNewUserClick()}>New User</button>
-      <div>
-      {isNewUserClicked === true?
-        (
-          <form><br />
-            <label>
-              User-ID:
-              <input ref={inputNewUser} type="text"/>
-            </label><br />
-            <label>
-            Password
-              <input type="password" ref={inputNewUserPassword} />
-            </label><br />
-            <input type="submit" value="Submit" onClick={newUser} />
-          <br />
-        </form>
-        ):
-        (null)
-      }
-        </div>
-        </div>
-      ):(null)
-      }
-      <br />
-      
-        </h4>
-        </div>
-          <div style={{clear: 'both'}}>
-          </div>
-          <button style={buttonstyle}>
-          <Dropdown style={buttonstyle} options={options} placeholder="Search by" />
-          </button>
-          <input ref={inputRef} type="text" />
-          <button type="button" onClick={onSearch}>
-            Search
-          </button>
-      
-          <div>
-            <UserPool/>
-          </div>
 
-          <h1><button>Play Game</button></h1>
-          <Upload />
-        </div>
+    <div className="App">
+    <div>
+    <h1 style={{float: 'left', display: 'inline-block'}}>Arachne</h1>
+    <h4 style={{float: 'right', display: 'inline'}}>
+    {
+    (isLogin === false)?(
+    <div>
+    {
+    isNewUserClicked === false?(
+    <div>
+    <button onClick={()=>changeLoginClick()}>Login</button>
+    <div>
+    {
+      isLoginClicked === true?
+      (<div>
+        <br />
+  <label>
+    Login-ID:
+    <input ref={inputRefUser} type="text"/>
+  </label><br />
+  <label>
+  Password
+    <input type="password" ref={inputRefPassword} />
+  </label><br />
+  <button type="submit" value="Submit" onClick={onClick} />
+  <br />
+  </div>
+      ):
+      (null)
+    }
+    </div>
+    </div>
+    ):(null)
+    }
+    
+    <br />
+    
+    
+    {
+    isLoginClicked === false?(
+    <div>
+    <button onClick={()=>changeNewUserClick()}>New User</button>
+    <div>
+    {
+      isNewUserClicked === true?
+      (
+        <div>
+        <br />
+  <label>
+    User-ID:
+    <input ref={inputNewUser} type="text"/>
+  </label><br />
+  <label>
+  Password
+    <input type="password" ref={inputNewUserPassword} />
+  </label><br />
+  <input type="submit" value="Submit" onClick={newUser} />
+  <br />
+</div>
+      ):
+      (null)
+    }
+    </div>
+    </div>
+    ):(null)
+    }
+    
+    
+    <br />
+    </div>
+    ):(<lable>{username}</lable>)
+    }
+    
+    </h4>
+    </div>
+      <div style={{clear: 'both'}}>
+      </div>
+      <button style={buttonstyle}>
+      <Dropdown style={buttonstyle} options={options} placeholder="Search by" />
+      </button>
+      <input ref={inputRef} type="text" />
+      <button type="button" onClick={onSearch}>
+        Search
+      </button>
       
     </div>
     );
