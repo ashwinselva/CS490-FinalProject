@@ -158,7 +158,12 @@ function App() {
     
     <br />
     </div>
-    ):(<lable>{username}</lable>)
+    ):(
+    <div>
+      <lable>{username}</lable>
+      <UserPool/>
+    </div>
+    )
     }
     
     </h4>
