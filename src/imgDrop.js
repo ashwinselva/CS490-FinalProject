@@ -14,6 +14,7 @@ function ImgDrop({
         const formData = new FormData()
         console.log(file)
         formData.append('myFile', file)
+        formData.append('poolName', poolName)
         socket.emit('new_user_pool', [poolName])
         
         

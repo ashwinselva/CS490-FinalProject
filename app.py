@@ -106,6 +106,7 @@ def get_pools(user_name):
         return False
 
 def image_URL(image_url):
+    global GBUCKET
     return 'https://storage.googleapis.com/' + GBUCKET + '/' + image_url
     
 def check_login(username, password):
@@ -125,7 +126,9 @@ def upload_image():
     print('image received')
     global GBUCKET
     global pool_name
-    print(pool_name)
+    curr_pool_name = pool_name
+    if 'poolName' in request.form.keys():
+        curr_pool_name = request.form['poolName']
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(GBUCKET)
     img = request.files['myFile']
@@ -136,6 +139,7 @@ def upload_image():
     blob.upload_from_filename(img.filename)
     os.remove(img.filename)
     blob.make_public()
+    print(image_URL(img.filename))
     
     
 @SOCKETIO.on('new_user_pool')
