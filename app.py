@@ -17,19 +17,19 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=os.path.join(__location__, 'cs490-f
 
 app = Flask(__name__, static_folder='./build/static')
 
-# Point SQLAlchemy to your Heroku database
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-# Gets rid of a warning
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
-
 CORS = CORS(app, resources={r"/*": {"origins": "*"}})
 
 SOCKETIO = SocketIO(app,
                     cors_allowed_origins="*",
                     json=json,
                     manage_session=False)
+                    
+db = SQLAlchemy(app)
+
+# Point SQLAlchemy to your Heroku database
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+# Gets rid of a warning
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 GBUCKET = 'cs490-testbucket'
 pool_name = ''
@@ -45,13 +45,11 @@ PoolItem = model.define_poolitem_class(db)
 #                    manage_session=False)
 
 def add_user(new_username, new_password):
-    try:
-        new_user = User(username=new_username, password=new_password)
-        db.session.add(new_user)
-        db.session.commit()
-        return True
-    finally:
-        return False
+    
+    new_user = User(username=new_username, password=new_password)
+    db.session.add(new_user)
+    db.session.commit()
+    return True
         
 
 def add_pool(pool_name, username):
@@ -84,6 +82,26 @@ def reassign_image(image_id, pool_name):
         db.session.add(new_item)
         db.session.commit()
         return True
+    finally:
+        return False
+
+def get_images(pool_Name):
+    try:
+        pool_images = PoolItem.query.filter_by(pool_name=pool_Name).all()
+        for i in pool_images:
+            pool_images[i] = Image.query.get(pool_images[i].image_id).image_url
+            
+        return pool_images
+    finally:
+        return False
+
+def get_pools(user_name):
+    try:
+        pools = Pool.query.filter_by(username = user_name).all()
+        for i in pools:
+            pools[i] = pools[i].pool_name
+            
+        return pools
     finally:
         return False
 
@@ -142,7 +160,9 @@ def on_disconnect():
 def on_login(data):
     """Triggered when a user logs in"""
     
-    username = str(data['username'])
+    print("Login")
+    
+    username = str(data['user'])
     password = str(data['password'])
     
     sid = request.sid
@@ -150,31 +170,33 @@ def on_login(data):
     result = check_login(password, username)
     
     if result:
-        SOCKETIO.emit('loginSuccess', {}, room=sid)
+        SOCKETIO.emit('loginSuccess', {}, broadcast=True, room=sid)
     else:
-        SOCKETIO.emit('loginFailed', {}, room=sid)
-    print('User disconnected')
+        SOCKETIO.emit('loginFailed', {}, broadcast=True, room=sid)
     
 @SOCKETIO.on('newUser')
 def on_new_user(data):
-    """Triggered when a user logs in"""
+    """Triggered when a user adds an account"""
     
-    username = str(data['username'])
+    print("New User")
+    
+    username = str(data['user'])
     password = str(data['password'])
     
     sid = request.sid
     
-    result = add_user(password, username)
+    result = add_user(username, password)
+    
+    print(result)
     
     if result:
-        SOCKETIO.emit('loginSuccess', {}, room=sid)
+        SOCKETIO.emit('loginSuccess', {}, broadcast=True, room=sid)
     else:
-        SOCKETIO.emit('loginFailed', {}, room=sid)
-    print('User disconnected')
+        SOCKETIO.emit('loginFailed', {}, broadcast=True, room=sid)
 
 
 SOCKETIO.run(
         app,
         host=os.getenv('IP', '0.0.0.0'),
-        port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', 8081)),
+        port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', default='8081')),
     )
