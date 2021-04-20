@@ -99,8 +99,7 @@ function App() {
     <div>
     {
       isLoginClicked === true?
-      (
-        <form>
+      (<div>
         <br />
   <label>
     Login-ID:
@@ -110,9 +109,9 @@ function App() {
   Password
     <input type="password" ref={inputRefPassword} />
   </label><br />
-  <input type="submit" value="Submit" onClick={onClick} />
+  <button type="submit" value="Submit" onClick={onClick} />
   <br />
-</form>
+  </div>
       ):
       (null)
     }
@@ -132,7 +131,7 @@ function App() {
     {
       isNewUserClicked === true?
       (
-        <form>
+        <div>
         <br />
   <label>
     User-ID:
@@ -144,7 +143,7 @@ function App() {
   </label><br />
   <input type="submit" value="Submit" onClick={newUser} />
   <br />
-</form>
+</div>
       ):
       (null)
     }

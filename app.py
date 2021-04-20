@@ -17,19 +17,19 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=os.path.join(__location__, 'cs490-f
 
 app = Flask(__name__, static_folder='./build/static')
 
-# Point SQLAlchemy to your Heroku database
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-# Gets rid of a warning
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
-
 CORS = CORS(app, resources={r"/*": {"origins": "*"}})
 
 SOCKETIO = SocketIO(app,
                     cors_allowed_origins="*",
                     json=json,
                     manage_session=False)
+                    
+db = SQLAlchemy(app)
+
+# Point SQLAlchemy to your Heroku database
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+# Gets rid of a warning
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 GBUCKET = 'cs490-testbucket'
 
@@ -44,13 +44,11 @@ PoolItem = model.define_poolitem_class(db)
 #                    manage_session=False)
 
 def add_user(new_username, new_password):
-    try:
-        new_user = User(username=new_username, password=new_password)
-        db.session.add(new_user)
-        db.session.commit()
-        return True
-    finally:
-        return False
+    
+    new_user = User(username=new_username, password=new_password)
+    db.session.add(new_user)
+    db.session.commit()
+    return True
         
 
 def add_pool(pool_name, username):
@@ -150,9 +148,9 @@ def on_login(data):
     result = check_login(password, username)
     
     if result:
-        SOCKETIO.emit('loginSuccess', {}, room=sid)
+        SOCKETIO.emit('loginSuccess', {}, broadcast=True, room=sid)
     else:
-        SOCKETIO.emit('loginFailed', {}, room=sid)
+        SOCKETIO.emit('loginFailed', {}, broadcast=True, room=sid)
     
 @SOCKETIO.on('newUser')
 def on_new_user(data):
@@ -165,16 +163,18 @@ def on_new_user(data):
     
     sid = request.sid
     
-    result = add_user(password, username)
+    result = add_user(username, password)
+    
+    print(result)
     
     if result:
-        SOCKETIO.emit('loginSuccess', {}, room=sid)
+        SOCKETIO.emit('loginSuccess', {}, broadcast=True, room=sid)
     else:
-        SOCKETIO.emit('loginFailed', {}, room=sid)
+        SOCKETIO.emit('loginFailed', {}, broadcast=True, room=sid)
 
 
 SOCKETIO.run(
         app,
         host=os.getenv('IP', '0.0.0.0'),
-        port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', 8081)),
+        port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', default='8081')),
     )
