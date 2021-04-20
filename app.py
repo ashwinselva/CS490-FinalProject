@@ -162,7 +162,7 @@ def on_new_user(data):
     
     sid = request.sid
     
-    result = check_login(password, username)
+    result = add_user(password, username)
     
     if result:
         SOCKETIO.emit('loginSuccess', {}, room=sid)
