@@ -30,7 +30,6 @@ function App() {
     const password=inputRefPassword.current.value;
     console.log(username);
     console.log(password);
-    changeLogin()
      socket.emit('login',{user:username,password:password});
     
     }
