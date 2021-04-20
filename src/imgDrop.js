@@ -1,4 +1,7 @@
 import React, {useState} from 'react';
+import io from 'socket.io-client';
+
+const socket = io();
 
 function ImgDrop({
     poolName,
@@ -11,8 +14,9 @@ function ImgDrop({
     function uploadFile(file) {
         const formData = new FormData()
         console.log(file)
-        formData.append('myFile', file)
-        formData.append('poolName', poolName)
+        // formData.append('myFile', file)
+        // formData.append('poolName', poolName)
+       
       
         fetch('/saveImage', {
             method: 'POST',

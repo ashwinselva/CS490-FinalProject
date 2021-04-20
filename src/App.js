@@ -4,30 +4,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import Upload from './Upload';
-import io from 'socket.io-client';
-
-
-const socket = io(); // Connects to socket connection
-
+import ImgDrop from './imgDrop';
 
 function App() {
   
   const [isLogin,setLogin]=useState(false);
   const [isLoginClicked,setLoginClicked]=useState(false);
   
-  const inputRef = useRef(null);
-  const inputRefUser = useRef(null); 
-  const inputRefPassword = useRef(null); 
-
-  function onClick(){
-    const username=inputRefUser.current.value;
-    const password=inputRefPassword.current.value;
-    console.log(username);
-    console.log(password);
-     socket.emit('login',{user:username,password:password});
-    
-    }
-
+  const inputRef = useRef(null); 
   const options = [
   'Keyword', 'Tag', 'Random Images'
   ];
@@ -69,13 +53,13 @@ function App() {
         <br />
   <label>
     Login-ID:
-    <input ref={inputRefUser} type="text"/>
+    <input type="text" name="name" />
   </label><br />
   <label>
   Password
-    <input type="password" ref={inputRefPassword} />
+    <input type="password" name="password" />
   </label><br />
-  <input type="submit" value="Submit" onClick={onClick} />
+  <input type="submit" value="Submit" />
   <br />
 </form>
       ):
@@ -96,6 +80,7 @@ function App() {
       
       <h1><button>Play Game</button></h1>
       <Upload />
+      <ImgDrop/>
     </div>
   );
 }
