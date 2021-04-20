@@ -96,17 +96,15 @@ def get_images(pool_Name):
         return False
 
 def get_pools(user_name):
-    try:
-        pools = Pool.query.filter_by(username = user_name).all()
-        for i in pools:
-            pools[i] = pools[i].pool_name
+    
+    pools = Pool.query.filter_by(username = user_name).all()
+    for i in pools:
+        pools[i] = pools[i].pool_name
             
-        return pools
-    finally:
-        return False
-
+    return pools
+    
+        
 def get_all_pools():
-    pools=[]
 
     pools = Pool.query.all()
     for i in pools:
@@ -114,7 +112,8 @@ def get_all_pools():
             
     return pools
     
-        
+    
+
 def image_URL(image_url):
     return 'https://storage.googleapis.com/' + GBUCKET + '/' + image_url
     
@@ -152,7 +151,7 @@ def upload_image():
 def on_new_user_pool(data):
     global pool_name
     pool_name = str(data[0])
-
+ 
     
 @SOCKETIO.on('connect')
 def on_connect():
@@ -208,9 +207,7 @@ def on_new_user(data):
 @SOCKETIO.on('viewpools')
 def on_view_pools(data):
     sid = request.sid
-    all_pools=get_all_pools()
-    print('done')
-    print(all_pools)
+    all_pools=get_pools(data[0])
     SOCKETIO.emit('response', all_pools, broadcast=True, room=sid)
 
 
