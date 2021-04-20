@@ -104,6 +104,15 @@ def get_pools(user_name):
         return pools
     finally:
         return False
+        
+def get_all_pools():
+    try:
+        pools = Pool.query.all()
+        for i in pools:
+            pools[i] = pools[i].pool_name
+        return pools
+    finally:
+        return False
 
 def image_URL(image_url):
     return 'https://storage.googleapis.com/' + GBUCKET + '/' + image_url
