@@ -37,6 +37,50 @@ SOCKETIO = SocketIO(app,
 #                    json=json,
 #                    manage_session=False)
 
+def add_user(new_username, new_password):
+    try:
+        new_user = User(username=new_username, password=new_password)
+        db.session.add(new_user)
+        db.session.commit()
+        return True
+    finally:
+        return False
+        
+
+def add_pool(pool_name, username):
+    try:
+        new_pool = Pool(pool_name=pool_name, username=username)
+        db.session.add(new_pool)
+        db.session.commit()
+        return True
+    finally:
+        return False
+        
+
+def add_image(image_name, image_url, pool_name):
+    try:
+        new_image = Image(image_name=image_name, image_url=image_url)
+        db.session.add(new_image)
+        db.session.commit()
+        item_id = new_image.image_id
+        new_item = PoolItem(pool_name=pool_name, image_id=item_id)
+        db.session.add(new_item)
+        db.session.commit()
+        return item_id
+    finally:
+        return -1
+        
+
+def reassign_image(image_id, pool_name):
+    try:
+        new_item = PoolItem(pool_name=pool_name, image_id=image_id)
+        db.session.add(new_item)
+        db.session.commit()
+        return True
+    finally:
+        return False
+
+
 @app.route('/', defaults={"filename": "index.html"})
 @app.route('/<path:filename>')
 def index(filename):
