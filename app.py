@@ -105,6 +105,16 @@ def get_pools(user_name):
     finally:
         return False
 
+def get_all_pools():
+    pools=[]
+
+    pools = Pool.query.all()
+    for i in pools:
+        pools[i] = pools[i].pool_name
+            
+    return pools
+    
+        
 def image_URL(image_url):
     return 'https://storage.googleapis.com/' + GBUCKET + '/' + image_url
     
@@ -194,6 +204,14 @@ def on_new_user(data):
         SOCKETIO.emit('loginSuccess', {}, broadcast=True, room=sid)
     else:
         SOCKETIO.emit('loginFailed', {}, broadcast=True, room=sid)
+        
+@SOCKETIO.on('viewpools')
+def on_view_pools(data):
+    sid = request.sid
+    all_pools=get_all_pools()
+    print('done')
+    print(all_pools)
+    SOCKETIO.emit('response', all_pools, broadcast=True, room=sid)
 
 
 SOCKETIO.run(
