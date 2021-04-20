@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-
+import Upload from "./Upload"
+import imgDrop from "./imgDrop"
 
 export default function UserPool(){
     const [isClicked, setClicked] = useState(false);
@@ -17,9 +18,6 @@ export default function UserPool(){
         setName(userText);
     }
     
-    
-
-
 return (
     <div>
         {isClicked === true ? (
@@ -27,6 +25,8 @@ return (
             {isConfirmed === true ? (
                 <div>
                     Displaying {poolName}
+                    <Upload poolName={poolName}/>
+                    <imgDrop poolName={poolName}/>
                 </div>
             ):(
                 <div>
