@@ -32,6 +32,7 @@ SOCKETIO = SocketIO(app,
                     manage_session=False)
 
 GBUCKET = 'cs490-testbucket'
+pool_name = ''
 
 User = model.define_user_class(db)
 Pool = model.define_pool_class(db)
@@ -103,27 +104,27 @@ def index(filename):
 
 @app.route('/saveImage', methods=['POST'])
 def upload_image():
-    global GBUCKET
     print('image received')
-    #pool_name = request.form['poolName']
-    image_name = None
+    global pool_name
+    print(pool_name)
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(GBUCKET)
     img = request.files['myFile']
-    if 'imageName' in request.args:
-        file_type = img.filename.split('.')[-1]
-        image_name = request.args['imageName'] + '.' + file_type
-    else:
-        image_name = img.filename
-    #if pool_name != 'test':
-    #    add_image(image_name, image_name, pool_name)
+    image_name = img.filename
+    add_image(image_name, image_name, pool_name)
     img.save(secure_filename(img.filename))
     blob = bucket.blob(img.filename) 
     blob.upload_from_filename(img.filename)
     os.remove(img.filename)
     blob.make_public()
     
-
+    
+@SOCKETIO.on('new_user_pool')
+def on_new_user_pool(data):
+    global pool_name
+    pool_name = str(data[0])
+ 
+    
 @SOCKETIO.on('connect')
 def on_connect():
     """Triggered when a user connects"""
@@ -170,7 +171,6 @@ def on_new_user(data):
     else:
         SOCKETIO.emit('loginFailed', {}, room=sid)
     print('User disconnected')
-
 
 
 SOCKETIO.run(
