@@ -38,6 +38,7 @@ def upload_image():
     blob.upload_from_filename(img.filename)
     os.remove(img.filename)
     blob.make_public()
+    
 
 SOCKETIO.run(
         app,
