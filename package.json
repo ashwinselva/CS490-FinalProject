@@ -8,12 +8,7 @@
     "react-dom": "^17.0.1",
     "react-dropdown": "^1.9.2",
     "react-scripts": "4.0.2",
-<<<<<<< HEAD
-    "socket.io": "^4.0.1",
-    "socket.io-client": "^3.1.1",
-=======
     "socket.io-client": "^3.1.2",
->>>>>>> 1564ee2e3be106988aeef8032467bd4d8c0b6444
     "web-vitals": "^1.1.0"
   },
   "scripts": {
