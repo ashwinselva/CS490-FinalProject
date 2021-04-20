@@ -15,6 +15,7 @@ function App() {
   const [isLogin,setLogin]=useState(false);
   const [isLoginClicked,setLoginClicked]=useState(false);
   const [isNewUserClicked,setNewUserClicked]=useState(false);
+  const [username, setUsername]=useState('');
 
   
   const inputRef = useRef(null);
@@ -28,7 +29,8 @@ function App() {
     const password=inputRefPassword.current.value;
     console.log(username);
     console.log(password);
-     socket.emit('login',{user:username,password:password});
+    socket.emit('login',{user:username,password:password});
+    setUsername(username)
     
     }
 
@@ -37,7 +39,8 @@ function App() {
     const password=inputNewUserPassword.current.value;
     console.log(username);
     console.log(password);
-     socket.emit('newUser',{user:username,password:password});
+    socket.emit('newUser',{user:username,password:password});
+    setUsername(username)
     
     }
 
@@ -73,6 +76,12 @@ function App() {
       return !prevLogin;
     });
   }
+  
+  useEffect(() => {
+    socket.on('loginSuccess', (data) => {
+      setLogin(true);
+    });
+  });
   
   return (
     <div className="App">
