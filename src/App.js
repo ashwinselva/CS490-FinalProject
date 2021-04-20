@@ -4,7 +4,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import Upload from './Upload';
-import ImgDrop from './imgDrop';
+import io from 'socket.io-client';
+
+
+const socket = io(); // Connects to socket connection
+
 
 function App() {
   
@@ -87,13 +91,13 @@ function App() {
         <br />
   <label>
     Login-ID:
-    <input type="text" name="name" />
+    <input ref={inputRefUser} type="text"/>
   </label><br />
   <label>
   Password
-    <input type="password" name="password" />
+    <input type="password" ref={inputRefPassword} />
   </label><br />
-  <input type="submit" value="Submit" />
+  <input type="submit" value="Submit" onClick={onClick} />
   <br />
 </form>
       ):
@@ -153,7 +157,6 @@ function App() {
       
       <h1><button>Play Game</button></h1>
       <Upload />
-      <ImgDrop/>
     </div>
   );
 }

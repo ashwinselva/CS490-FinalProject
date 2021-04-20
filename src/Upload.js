@@ -4,18 +4,24 @@ import 'react-dropdown/style.css';
 import io from 'socket.io-client';
 //import axios from 'axios';
 
+const socket = io();
 
-function Upload() {
+function Upload({
+    poolName,
+    addPhotos,
+}
+  ) {
   
 const changeHandler = (event) => {
   const files = event.target.files
   const formData = new FormData()
   console.log(files[0])
   formData.append('myFile', files[0])
+  socket.emit('new_user_pool', [poolName])
   
   fetch('/saveImage', {
     method: 'POST',
-    body: formData
+    body: formData,
   })
   .then(response => response.json())
   .then(data => {

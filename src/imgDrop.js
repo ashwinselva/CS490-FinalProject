@@ -5,7 +5,6 @@ const socket = io();
 
 function ImgDrop({
     poolName,
-    socket,
     addPhotos,
 }) {
     const [inZone, setInZone] = useState(false);
@@ -14,10 +13,10 @@ function ImgDrop({
     function uploadFile(file) {
         const formData = new FormData()
         console.log(file)
-        // formData.append('myFile', file)
-        // formData.append('poolName', poolName)
-       
-      
+        formData.append('myFile', file)
+        socket.emit('new_user_pool', [poolName])
+        
+        
         fetch('/saveImage', {
             method: 'POST',
             body: formData
