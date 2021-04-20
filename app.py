@@ -88,9 +88,9 @@ def reassign_image(image_id, pool_name):
 
 def get_images(pool_Name):
     try:
-        pool_images = PoolItems.query.filter_by(pool_name=pool_Name).all()
+        pool_images = PoolItem.query.filter_by(pool_name=pool_Name).all()
         for i in pool_images:
-            pool_images[i] = Images.query.get(pool_images[i].image_id).image_url
+            pool_images[i] = Image.query.get(pool_images[i].image_id).image_url
             
         return pool_images
     finally:
@@ -98,8 +98,8 @@ def get_images(pool_Name):
 
 def get_pools(user_name):
     try:
-        pools = Pools.query.filter_by(username = user_name).all()
-        for i in pool_images:
+        pools = Pool.query.filter_by(username = user_name).all()
+        for i in pools:
             pools[i] = pools[i].pool_name
             
         return pools
