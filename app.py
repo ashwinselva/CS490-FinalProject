@@ -33,6 +33,11 @@ SOCKETIO = SocketIO(app,
 
 GBUCKET = 'cs490-testbucket'
 
+User = model.define_user_class(db)
+Pool = model.define_pool_class(db)
+Image = model.define_image_class(db)
+PoolItem = model.define_poolitem_class(db)
+
 #SOCKETIO = SocketIO(app,
 #                    cors_allowed_origins="*",
 #                    json=json,
