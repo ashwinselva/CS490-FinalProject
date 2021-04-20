@@ -31,6 +31,7 @@ SOCKETIO = SocketIO(app,
                     json=json,
                     manage_session=False)
 
+GBUCKET = 'cs490-testbucket'
 
 #SOCKETIO = SocketIO(app,
 #                    cors_allowed_origins="*",
@@ -80,6 +81,8 @@ def reassign_image(image_id, pool_name):
     finally:
         return False
 
+def image_URL(image_url):
+    return 'https://storage.googleapis.com/' + GBUCKET + '/' + image_url
 
 @app.route('/', defaults={"filename": "index.html"})
 @app.route('/<path:filename>')
@@ -91,7 +94,7 @@ def index(filename):
 def upload_image():
     print('image received')
     storage_client = storage.Client()
-    bucket = storage_client.get_bucket('cs490-testbucket')
+    bucket = storage_client.get_bucket(GBUCKET)
     img = request.files['myFile']
     img.save(secure_filename(img.filename))
     blob = bucket.blob(img.filename) 
