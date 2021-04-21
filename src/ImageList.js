@@ -1,30 +1,20 @@
 import './App.css';
 import React, { useState, useRef, useEffect} from 'react';
 import 'react-dropdown/style.css';
+import ImageDisplay from './ImageDisplay';
 
 function ImageList({
     imageList,
 }
   ) {
-        
-        const rowSize = 5;
-        
-        var rowNumber = 0;
-        var imageRows = [];
-        var currentRow = [];
-        
-        imageList.forEach(image => {
-            currentRow[currentRow.length] = image;
-            if (currentRow.length === rowSize) {
-                imageRows[imageRows.length] = currentRow;
-                currentRow = [];
-            }
-        })
-
   
   return (
-    <div className="App">
-       
+    <div className="App.imageGrid">
+       {
+            imageList.map((item) => (
+                <ImageDisplay imageURL={item} />
+            ))
+       }
     </div>
     
   );
