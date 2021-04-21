@@ -163,7 +163,7 @@ function App() {
     ):(
     <div>
       <lable>{username}</lable>
-      <UserPool username={username}/>
+      <UserPool username={username} socket={socket}/>
     </div>
     )
     }
