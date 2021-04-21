@@ -32,8 +32,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 GBUCKET = 'cs490-testbucket'
-pool_name = ''
-username = ''
 
 User = model.define_user_class(db)
 Pool = model.define_pool_class(db)
@@ -130,18 +128,17 @@ def index(filename):
 def upload_image():
     print('image received')
     global GBUCKET
-    global pool_name
-    global username
-    print(pool_name)
-    print(username)
-    curr_pool_name = pool_name
+    curr_pool_name = ''
     if 'poolName' in request.form.keys():
         curr_pool_name = request.form['poolName']
+    curr_username = ''
+    if 'username' in request.form.keys():
+        curr_username = request.form['username']
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(GBUCKET)
     img = request.files['myFile']
     image_name = img.filename
-    add_pool(pool_name, username)
+    add_pool(curr_pool_name, curr_username)
     add_image(image_name, image_name, curr_pool_name)
     img.save(secure_filename(img.filename))
     blob = bucket.blob(img.filename) 
@@ -151,13 +148,6 @@ def upload_image():
     print(image_URL(img.filename))
     
     
-@SOCKETIO.on('new_user_pool')
-def on_new_user_pool(data):
-    global pool_name
-    global username
-    username = str(data[1])
-    pool_name = str(data[0])
- 
     
 @SOCKETIO.on('connect')
 def on_connect():
