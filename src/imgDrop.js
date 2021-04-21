@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import io from 'socket.io-client';
 
-const socket = io();
-
 function ImgDrop(props) {
     const [inZone, setInZone] = useState(false);
     const [fileList, setFileList] = useState([]);
+    
+    const socket = props.socket;
     
     function uploadFile(file) {
         const formData = new FormData();
