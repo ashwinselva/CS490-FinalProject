@@ -32,7 +32,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 GBUCKET = 'cs490-testbucket'
-pool_name = ''
 
 User = model.define_user_class(db)
 Pool = model.define_pool_class(db)
@@ -84,37 +83,33 @@ def reassign_image(image_id, pool_name):
         return True
     finally:
         return False
-
+        
 def get_images(pool_Name):
-    try:
-        pool_images = PoolItem.query.filter_by(pool_name=pool_Name).all()
-        for i in pool_images:
-            pool_images[i] = Image.query.get(pool_images[i].image_id).image_url
-            
-        return pool_images
-    finally:
-        return False
+    temp = PoolItem.query.filter_by(pool_name=pool_Name).all()
+    pool_images = []
+    for i in temp:
+        pool_images.append(Image.query.get(i.image_id).image_url)
+    return pool_images
+
 
 def get_pools(user_name):
-    try:
-        pools = Pool.query.filter_by(username = user_name).all()
-        for i in pools:
-            pools[i] = pools[i].pool_name
-            
-        return pools
-    finally:
-        return False
-        
+    temp = Pool.query.filter_by(username = user_name).all()
+    pools = []
+    for i in temp:
+        pools.append(i.pool_name)
+    return pools
+
+    
 def get_all_pools():
-    try:
-        pools = Pool.query.all()
-        for i in pools:
-            pools[i] = pools[i].pool_name
-        return pools
-    finally:
-        return False
+    temp = Pool.query.all()
+    pools = []
+    for i in temp:
+        pools.append(i.pool_name)
+    return pools
+
 
 def image_URL(image_url):
+    global GBUCKET
     return 'https://storage.googleapis.com/' + GBUCKET + '/' + image_url
     
 def check_login(username, password):
@@ -133,25 +128,26 @@ def index(filename):
 def upload_image():
     print('image received')
     global GBUCKET
-    global pool_name
-    print(pool_name)
+    curr_pool_name = ''
+    if 'poolName' in request.form.keys():
+        curr_pool_name = request.form['poolName']
+    curr_username = ''
+    if 'username' in request.form.keys():
+        curr_username = request.form['username']
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(GBUCKET)
     img = request.files['myFile']
     image_name = img.filename
-    add_image(image_name, image_name, pool_name)
+    add_pool(curr_pool_name, curr_username)
+    add_image(image_name, image_name, curr_pool_name)
     img.save(secure_filename(img.filename))
     blob = bucket.blob(img.filename) 
     blob.upload_from_filename(img.filename)
     os.remove(img.filename)
     blob.make_public()
+    print(image_URL(img.filename))
     
     
-@SOCKETIO.on('new_user_pool')
-def on_new_user_pool(data):
-    global pool_name
-    pool_name = str(data[0])
- 
     
 @SOCKETIO.on('connect')
 def on_connect():
@@ -180,9 +176,9 @@ def on_login(data):
     result = check_login(username, password)
     
     if result:
-        SOCKETIO.emit('loginSuccess', {}, broadcast=True, room=sid)
+        SOCKETIO.emit('loginSuccess', {}, room=sid)
     else:
-        SOCKETIO.emit('loginFailed', {}, broadcast=True, room=sid)
+        SOCKETIO.emit('loginFailed', {}, room=sid)
     
 @SOCKETIO.on('newUser')
 def on_new_user(data):
@@ -200,9 +196,19 @@ def on_new_user(data):
     print(result)
     
     if result:
-        SOCKETIO.emit('loginSuccess', {}, broadcast=True, room=sid)
+        SOCKETIO.emit('loginSuccess', {}, room=sid)
     else:
-        SOCKETIO.emit('loginFailed', {}, broadcast=True, room=sid)
+        SOCKETIO.emit('loginFailed', {}, room=sid)
+        
+@SOCKETIO.on('viewpools')
+def on_view_pools(data):
+    sid = request.sid
+    all_pools=get_all_pools()
+    pools_and_images = {}
+    for i in all_pools:
+        pools_and_images[i] = get_images(i)
+    print(pools_and_images)
+    SOCKETIO.emit('response', pools_and_images, room=sid)
 
 
 SOCKETIO.run(

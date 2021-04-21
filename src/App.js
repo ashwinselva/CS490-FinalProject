@@ -4,8 +4,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import Upload from './Upload';
+import ImgDrop from './imgDrop';
 import io from 'socket.io-client';
 import UserPool from './UserPool';
+import ViewPools from './ViewPools';
 
 
 
@@ -112,7 +114,7 @@ function App() {
   Password
     <input type="password" ref={inputRefPassword} />
   </label><br />
-  <button type="submit" value="Submit" onClick={onClick} />
+  <input type="submit" value="Submit" onClick={onClick} />
   <br />
   </div>
       ):
@@ -161,7 +163,7 @@ function App() {
     ):(
     <div>
       <lable>{username}</lable>
-      <UserPool/>
+      <UserPool username={username}/>
     </div>
     )
     }
@@ -177,7 +179,9 @@ function App() {
       <button type="button" onClick={onSearch}>
         Search
       </button>
-      
+
+      <ViewPools username={username}/>
+
     </div>
     );
 }
