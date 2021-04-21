@@ -62,7 +62,6 @@ export function ViewPools() {
         
      </div>
      </div>
-      
   );
 }
 
