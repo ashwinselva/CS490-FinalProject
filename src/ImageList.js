@@ -9,7 +9,7 @@ function ImageList({
   ) {
   
   return (
-    <div className="App.imageGrid">
+    <div className="App.Image-grid">
        {
             imageList.map((item) => (
                 <ImageDisplay imageURL={item} />

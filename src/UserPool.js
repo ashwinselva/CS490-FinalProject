@@ -7,6 +7,8 @@ export default function UserPool(props){
     const inputRef = useRef(null);
     const [isConfirmed, setConfirmed] = useState(false);
     const [poolName, setName] = useState();
+    
+    const socket = props.socket;
 
     function onPoolButton(){
         setClicked((prevShown) => !prevShown);
@@ -25,8 +27,8 @@ return (
             {isConfirmed === true ? (
                 <div>
                     Displaying {poolName}
-                    <Upload poolName={poolName} username={props.username}/>
-                    <imgDrop poolName={poolName} username={props.username}/>
+                    <Upload poolName={poolName} username={props.username} scocket={socket}/>
+                    <imgDrop poolName={poolName} username={props.username} socket={socket}/>
                 </div>
             ):(
                 <div>

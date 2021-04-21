@@ -4,11 +4,10 @@ import 'react-dropdown/style.css';
 import io from 'socket.io-client';
 //import axios from 'axios';
 
-const socket = io();
-
 function Upload({
     poolName,
     addPhotos,
+    socket,
 }
   ) {
   
