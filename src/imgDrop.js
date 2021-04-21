@@ -11,10 +11,8 @@ function ImgDrop(props) {
         const formData = new FormData();
         console.log(file);
         formData.append('myFile', file);
-        socket.emit('new_user_pool', [props.poolName, props.username]);
-        formData.append('poolName',props.poolName);
-        socket.emit('new_user_pool', [props.poolName]);
-        
+        formData.append('poolName', props.poolName);
+        formData.append('username', props.username);
         
         fetch('/saveImage', {
             method: 'POST',
