@@ -13,6 +13,13 @@
   }
 }
 
+.Image-grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
