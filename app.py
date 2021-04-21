@@ -32,6 +32,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 GBUCKET = 'cs490-testbucket'
+pool_name = ''
+username = ''
 
 User = model.define_user_class(db)
 Pool = model.define_pool_class(db)
@@ -62,17 +64,14 @@ def add_pool(pool_name, username):
         
 
 def add_image(image_name, image_url, pool_name):
-    try:
-        new_image = Image(image_name=image_name, image_url=image_url)
-        db.session.add(new_image)
-        db.session.commit()
-        item_id = new_image.image_id
-        new_item = PoolItem(pool_name=pool_name, image_id=item_id)
-        db.session.add(new_item)
-        db.session.commit()
-        return item_id
-    finally:
-        return -1
+    new_image = Image(image_name=image_name, image_url=image_url)
+    db.session.add(new_image)
+    db.session.commit()
+    item_id = new_image.image_id
+    new_item = PoolItem(pool_name=pool_name, image_id=item_id)
+    db.session.add(new_item)
+    db.session.commit()
+    return item_id
         
 
 def reassign_image(image_id, pool_name):
@@ -88,7 +87,7 @@ def get_images(pool_Name):
     temp = PoolItem.query.filter_by(pool_name=pool_Name).all()
     pool_images = []
     for i in temp:
-        pool_images.append(Image.query.get(i.image_id).image_url)
+        pool_images.append(image_URL(Image.query.get(i.image_id).image_url))
     return pool_images
 
 
@@ -138,16 +137,16 @@ def upload_image():
     bucket = storage_client.get_bucket(GBUCKET)
     img = request.files['myFile']
     image_name = img.filename
-    add_pool(curr_pool_name, curr_username)
-    add_image(image_name, image_name, curr_pool_name)
+    print(curr_pool_name)
+    add_image(image_name, secure_filename(img.filename), curr_pool_name)
     img.save(secure_filename(img.filename))
-    blob = bucket.blob(img.filename) 
-    blob.upload_from_filename(img.filename)
-    os.remove(img.filename)
+    blob = bucket.blob(secure_filename(img.filename)) 
+    blob.upload_from_filename(secure_filename(img.filename))
+    os.remove(secure_filename(img.filename))
     blob.make_public()
-    print(image_URL(img.filename))
-    
-    
+    print(image_URL(secure_filename(img.filename)))
+    return(image_URL(secure_filename(img.filename)))
+
     
 @SOCKETIO.on('connect')
 def on_connect():
@@ -209,7 +208,24 @@ def on_view_pools(data):
         pools_and_images[i] = get_images(i)
     print(pools_and_images)
     SOCKETIO.emit('response', pools_and_images, room=sid)
-
+    
+@SOCKETIO.on('fetchPools')
+def on_fetch_pools(data):
+    sid = request.sid
+    response = get_pools(str(data['username']))
+    SOCKETIO.emit('list pools', {'poolList' : response}, room=sid)
+    print('fetched pools')
+    
+@SOCKETIO.on('fetchImages')
+def on_fetch_images(data):
+    sid = request.sid
+    response = get_images(str(data['pool']))
+    SOCKETIO.emit('list images', {'imageList' : response}, room=sid)
+    print('fetched images')
+    
+@SOCKETIO.on('newPool')
+def on_new_pool(data):
+    add_pool(str(data['pool_name']), str(data['username']))
 
 SOCKETIO.run(
         app,
