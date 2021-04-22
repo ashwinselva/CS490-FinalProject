@@ -22,30 +22,6 @@ function App() {
   const [isNewUserClicked,setNewUserClicked]=useState(false);
   const [username, setUsername]=useState('');
   
-  const usernameRef = useRef(null); 
-  const passwordRef = useRef(null); 
-
-  function onLoginComplete(){
-    const username=usernameRef.current.value;
-    const password=passwordRef.current.value;
-    console.log(username);
-    console.log(password);
-    socket.emit('login',{user:username,password:password});
-    setUsername(username)
-    
-    }
-
-  function onNewUserComplete(){
-    const username=usernameRef.current.value;
-    const password=passwordRef.current.value;
-    console.log(username);
-    console.log(password);
-    socket.emit('newUser',{user:username,password:password});
-    setUsername(username)
-    
-    }
-
-  
   function changeLogin(){
     setLogin((prevLogin)=> {
       return !prevLogin;
@@ -68,10 +44,8 @@ function App() {
     {
     (isLogin === false)?(
     <LoginDropdown 
-      onLoginComplete={onLoginComplete} 
-      onNewUserComplete={onNewUserComplete}
-      usernameRef={usernameRef}
-      passwordRef={passwordRef}
+      socket={socket}
+      setUsername={setUsername}
     />
       
     ):(

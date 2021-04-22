@@ -1,9 +1,34 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 
-function LoginDropdown(props) {
+function LoginDropdown({
+    socket,
+    setUsername,
+}) {
     
     const [isLoginClicked,setLoginClicked]=useState(false);
     const [isNewUserClicked,setNewUserClicked]=useState(false);
+    
+    const usernameRef = useRef(null); 
+    const passwordRef = useRef(null); 
+
+    function onLoginComplete(){
+        const username=usernameRef.current.value;
+        const password=passwordRef.current.value;
+        console.log(username);
+        console.log(password);
+        socket.emit('login',{user:username,password:password});
+        setUsername(username)
+    }
+    
+    function onNewUserComplete(){
+        const username=usernameRef.current.value;
+        const password=passwordRef.current.value;
+        console.log(username);
+        console.log(password);
+        socket.emit('newUser',{user:username,password:password});
+        setUsername(username)
+    }
+    
     
     function onLoginClick() {
         setLoginClicked(true);
@@ -25,18 +50,18 @@ function LoginDropdown(props) {
                 <br />
                 <label>
                     Login-ID:
-                    <input ref={props.usernameRef} type="text"/>
+                    <input ref={usernameRef} type="text"/>
                 </label>
                 <br />
                 <label>
                     Password
-                    <input type="password" ref={props.inputRefPassword} />
+                    <input type="password" ref={passwordRef} />
                 </label>
                 <br />
                 {isLoginClicked?(
-                    <input type="submit" value="Login" onClick={props.onLoginComplete} />
+                    <input type="submit" value="Login" onClick={onLoginComplete} />
                 ):(
-                    <input type="submit" value="Create Account" onClick={props.onNewUserComplete} />
+                    <input type="submit" value="Create Account" onClick={onNewUserComplete} />
                 )}
                 <br />
                 </div>
