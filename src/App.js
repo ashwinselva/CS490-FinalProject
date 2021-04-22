@@ -7,9 +7,8 @@ import Upload from './Upload';
 import ImgDrop from './imgDrop';
 import io from 'socket.io-client';
 import UserPool from './UserPool';
-import ViewPools from './ViewPools';
 import LoginDropdown from './LoginDropdown';
-import Search from './Search';
+import HomeScreen from './HomeScreen';
 
 
 const socket = io(); // Connects to socket connection
@@ -66,18 +65,9 @@ function App() {
     {
       {
         'home': 
-        (
-        <div>
-        <Search />
-        <ViewPools username={username}/>
-        </div>
-        )
+        (<HomeScreen username={username}/>),
       } [contentState]
     }
-      
-    <Search />
-
-    <ViewPools username={username}/>
 
     </div>
     );
