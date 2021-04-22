@@ -8,7 +8,8 @@ import ImgDrop from './imgDrop';
 import io from 'socket.io-client';
 import UserPool from './UserPool';
 import ViewPools from './ViewPools';
-import LoginDropdown from './LoginDropdown'
+import LoginDropdown from './LoginDropdown';
+import Search from './Search';
 
 
 const socket = io(); // Connects to socket connection
@@ -20,8 +21,6 @@ function App() {
   const [isLoginClicked,setLoginClicked]=useState(false);
   const [isNewUserClicked,setNewUserClicked]=useState(false);
   const [username, setUsername]=useState('');
-
-  const searchRef = useRef(null);
   
   const usernameRef = useRef(null); 
   const passwordRef = useRef(null); 
@@ -46,28 +45,12 @@ function App() {
     
     }
 
-  const options = [
-  'Keyword', 'Tag', 'Random Images'
-  ];
-
-  const buttonstyle = {
-    background: "transparent",
-    border: "none"
-  };
-  
-  function onSearch() {
-    console.log('search');
-  }
   
   function changeLogin(){
     setLogin((prevLogin)=> {
       return !prevLogin;
     });
   }
-  
-  
-  
-  
   
   useEffect(() => {
     socket.on('loginSuccess', (data) => {
@@ -103,13 +86,8 @@ function App() {
     </div>
       <div style={{clear: 'both'}}>
       </div>
-      <button style={buttonstyle}>
-      <Dropdown style={buttonstyle} options={options} placeholder="Search by" />
-      </button>
-      <input ref={searchRef} type="text" />
-      <button type="button" onClick={onSearch}>
-        Search
-      </button>
+      
+      <Search />
 
       <ViewPools username={username}/>
 
