@@ -5,25 +5,21 @@ function LoginDropdown(props) {
     const [isLoginClicked,setLoginClicked]=useState(false);
     const [isNewUserClicked,setNewUserClicked]=useState(false);
     
-    function changeLoginClick() {
-        console.log("button clicked");
-        setLoginClicked((prevLogin)=> {
-            return !prevLogin;
-        });
+    function onLoginClick() {
+        setLoginClicked(true);
+        setNewUserClicked(false);
     }
     
-    function changeNewUserClick() {
-        console.log("button clicked");
-        setNewUserClicked((prevLogin)=> {
-            return !prevLogin;
-        });
+    function onNewUserClick() {
+        setNewUserClicked(true);
+        setLoginClicked(false);
     }
   
     return (
         <div>
         <div>
-            {isLoginClicked?(null):(<button onClick={() => changeLoginClick()}>Login</button>)}
-            {isNewUserClicked?(null):(<button onClick={() => changeNewUserClick()}>New User</button>)}
+            {isLoginClicked?(null):(<button onClick={() => onLoginClick()}>Login</button>)}
+            {isNewUserClicked?(null):(<button onClick={() => onNewUserClick()}>New User</button>)}
             {isLoginClicked||isNewUserClicked?(
                 <div>
                 <br />
@@ -38,9 +34,9 @@ function LoginDropdown(props) {
                 </label>
                 <br />
                 {isLoginClicked?(
-                    <input type="submit" value="Submit" onClick={props.onLoginComplete} />
+                    <input type="submit" value="Login" onClick={props.onLoginComplete} />
                 ):(
-                    <input type="submit" value="Submit" onClick={props.onNewUserComplete} />
+                    <input type="submit" value="Create Account" onClick={props.onNewUserComplete} />
                 )}
                 <br />
                 </div>
