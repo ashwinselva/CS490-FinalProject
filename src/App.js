@@ -11,8 +11,6 @@ const socket = io(); // Connects to socket connection
 function App() {
   
   const [isLogin,setLogin]=useState(false);
-  const [isLoginClicked,setLoginClicked]=useState(false);
-  const [isNewUserClicked,setNewUserClicked]=useState(false);
   const [username, setUsername]=useState('');
   const [contentState, setContent]=useState('home');
   
@@ -44,8 +42,9 @@ function App() {
     
     {
       {
-        'home': 
-        (<HomeScreen username={username}/>),
+        'home': (
+          <HomeScreen username={username}/>
+        ),
       } [contentState]
     }
 
