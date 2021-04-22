@@ -1,13 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useState, useRef, useEffect } from 'react';
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
-import Upload from './Upload';
-import ImgDrop from './imgDrop';
 import io from 'socket.io-client';
-import UserPool from './UserPool';
-import LoginDropdown from './LoginDropdown';
+import NavBar from './NavBar';
 import HomeScreen from './HomeScreen';
 
 
@@ -38,26 +32,12 @@ function App() {
   return (
 
     <div className="App">
-    <div>
-    <h1 style={{float: 'left', display: 'inline-block'}}>Arachne</h1>
-    <h4 style={{float: 'right', display: 'inline'}}>
-    {
-    (isLogin === false)?(
-    <LoginDropdown 
-      socket={socket}
+    <NavBar
+      isLogin={isLogin}
+      username={username}
       setUsername={setUsername}
+      socket={socket}
     />
-      
-    ):(
-    <div>
-      <lable>{username}</lable>
-      <UserPool username={username} socket={socket}/>
-    </div>
-    )
-    }
-    
-    </h4>
-    </div>
     
     <div style={{clear: 'both'}}>
     </div>

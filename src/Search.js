@@ -1,4 +1,6 @@
 import React, {useState, useRef} from 'react';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 function Search(props) {
     
