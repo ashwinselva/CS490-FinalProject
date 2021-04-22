@@ -21,6 +21,7 @@ function App() {
   const [isLoginClicked,setLoginClicked]=useState(false);
   const [isNewUserClicked,setNewUserClicked]=useState(false);
   const [username, setUsername]=useState('');
+  const [contentState, setContent]=useState('home');
   
   function changeLogin(){
     setLogin((prevLogin)=> {
@@ -58,12 +59,25 @@ function App() {
     
     </h4>
     </div>
-      <div style={{clear: 'both'}}>
-      </div>
+    
+    <div style={{clear: 'both'}}>
+    </div>
+    
+    {
+      {
+        'home': 
+        (
+        <div>
+        <Search />
+        <ViewPools username={username}/>
+        </div>
+        )
+      } [contentState]
+    }
       
-      <Search />
+    <Search />
 
-      <ViewPools username={username}/>
+    <ViewPools username={username}/>
 
     </div>
     );
