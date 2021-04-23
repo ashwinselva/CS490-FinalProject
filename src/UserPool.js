@@ -3,6 +3,7 @@ import Upload from "./Upload";
 import ImgDrop from "./imgDrop";
 import ImageList from "./ImageList";
 import SocketContext from "./SocketContext";
+import UsernameContext from './UsernameContext';
 
 export default function UserPool(props){
     const [viewMode, setView] = useState(false);
@@ -16,6 +17,7 @@ export default function UserPool(props){
     const [initialized, setInit] = useState(false);
     
     const socket = useContext(SocketContext);
+    const [username, setUsername] = useContext(UsernameContext);
     
     function onPoolSelect(poolName){
         console.log(poolName);
@@ -34,18 +36,18 @@ export default function UserPool(props){
         setConfirmed(true);
         const userText = inputRef.current.value;
         setPool(userText);
-        socket.emit('newPool', {pool_name:currentPool, username:props.username});
+        socket.emit('newPool', {pool_name:currentPool, username:username});
         console.log(isConfirmed);
     }
     
     function onShowSelection(){
         setConfirmed(false);
         setView(false);
-        socket.emit('fetchPools', {username:props.username});
+        socket.emit('fetchPools', {username:username});
     }
     
     if (!initialized){
-        socket.emit('fetchPools', {username:props.username});
+        socket.emit('fetchPools', {username:username});
         setInit(true);
     }
     
@@ -69,8 +71,8 @@ return (
                 <div>
                     Displaying {currentPool}
                     <button type="button" onClick={onShowSelection}>Choose A Different Pool</button>
-                    <Upload poolName={currentPool} username={props.username} socket={socket}/>
-                    <ImgDrop poolName={currentPool} username={props.username} socket={socket}/>
+                    <Upload poolName={currentPool} username={username} socket={socket}/>
+                    <ImgDrop poolName={currentPool} username={username} socket={socket}/>
                     {waiting === true? (
                         <div>Waiting</div>
                     ):(

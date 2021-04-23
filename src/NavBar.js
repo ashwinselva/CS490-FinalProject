@@ -1,24 +1,25 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useContext} from 'react';
 import LoginDropdown from './LoginDropdown';
 import UserPool from './UserPool';
+import UsernameContext from './UsernameContext';
 
 function NavBar({
     isLogin,
-    username,
-    setUsername,
 }) {
+    
+    const [username, setUsername] = useContext(UsernameContext);
     
     return (
         <div>
         <h1 style={{float: 'left', display: 'inline-block'}}>Arachne</h1>
         <h4 style={{float: 'right', display: 'inline'}}>
-        {(isLogin === false)?
+        {(username === '')?
         (
-            <LoginDropdown setUsername={setUsername} />
+            <LoginDropdown />
         ):(
             <div>
             <lable>{username}</lable>
-            <UserPool username={username}/>
+            <UserPool />
             </div>
         )}
         

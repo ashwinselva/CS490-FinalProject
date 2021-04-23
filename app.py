@@ -175,7 +175,7 @@ def on_login(data):
     result = check_login(username, password)
     
     if result:
-        SOCKETIO.emit('loginSuccess', {}, room=sid)
+        SOCKETIO.emit('loginSuccess', {'username':username}, room=sid)
     else:
         SOCKETIO.emit('loginFailed', {}, room=sid)
     
@@ -195,7 +195,7 @@ def on_new_user(data):
     print(result)
     
     if result:
-        SOCKETIO.emit('loginSuccess', {}, room=sid)
+        SOCKETIO.emit('loginSuccess', {'username':username}, room=sid)
     else:
         SOCKETIO.emit('loginFailed', {}, room=sid)
         
