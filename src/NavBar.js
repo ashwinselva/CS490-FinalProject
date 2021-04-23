@@ -6,7 +6,6 @@ function NavBar({
     isLogin,
     username,
     setUsername,
-    socket,
 }) {
     
     return (
@@ -15,14 +14,11 @@ function NavBar({
         <h4 style={{float: 'right', display: 'inline'}}>
         {(isLogin === false)?
         (
-            <LoginDropdown 
-            socket={socket}
-            setUsername={setUsername}
-            />
+            <LoginDropdown setUsername={setUsername} />
         ):(
             <div>
             <lable>{username}</lable>
-            <UserPool username={username} socket={socket}/>
+            <UserPool username={username}/>
             </div>
         )}
         

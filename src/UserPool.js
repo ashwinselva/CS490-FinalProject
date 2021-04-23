@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import Upload from "./Upload";
 import ImgDrop from "./imgDrop";
 import ImageList from "./ImageList";
+import SocketContext from "./SocketContext";
 
 export default function UserPool(props){
     const [viewMode, setView] = useState(false);
@@ -14,7 +15,7 @@ export default function UserPool(props){
     const [imageList, setImages] = useState([]);
     const [initialized, setInit] = useState(false);
     
-    const socket = props.socket;
+    const socket = useContext(SocketContext);
     
     function onPoolSelect(poolName){
         console.log(poolName);
