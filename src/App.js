@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
+import SocketContext from './SocketContext';
 import NavBar from './NavBar';
 import HomeScreen from './HomeScreen';
 
@@ -28,7 +29,7 @@ function App() {
   }, []);
   
   return (
-
+    <SocketContext.Provider value={socket}>
     <div className="App">
     <NavBar
       isLogin={isLogin}
@@ -49,6 +50,7 @@ function App() {
     }
 
     </div>
+    </SocketContext.Provider>
     );
 }
 

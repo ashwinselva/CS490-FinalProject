@@ -1,9 +1,11 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useContext} from 'react';
+import SocketContext from './SocketContext';
 
 function LoginDropdown({
-    socket,
     setUsername,
 }) {
+    
+    const socket = useContext(SocketContext);
     
     const [isLoginClicked,setLoginClicked]=useState(false);
     const [isNewUserClicked,setNewUserClicked]=useState(false);
