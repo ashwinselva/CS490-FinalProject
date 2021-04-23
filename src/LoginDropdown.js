@@ -2,7 +2,6 @@ import React, {useState, useRef, useContext} from 'react';
 import SocketContext from './SocketContext';
 
 function LoginDropdown({
-    setUsername,
 }) {
     
     const socket = useContext(SocketContext);
@@ -19,7 +18,6 @@ function LoginDropdown({
         console.log(username);
         console.log(password);
         socket.emit('login',{user:username,password:password});
-        setUsername(username)
     }
     
     function onNewUserComplete(){
@@ -28,7 +26,6 @@ function LoginDropdown({
         console.log(username);
         console.log(password);
         socket.emit('newUser',{user:username,password:password});
-        setUsername(username)
     }
     
     
