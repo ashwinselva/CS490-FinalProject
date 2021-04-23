@@ -1,10 +1,8 @@
 import './App.css';
 import React, { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
-import DisplayContext from './DisplayContext';
-import SocketContext from './SocketContext';
-import UsernameContext from './UsernameContext';
-import NavBar from './NavBar';
+import ContextManager from './ContextManager';
+import ToolBar from './ToolBar';
 import HomeScreen from './HomeScreen';
 
 
@@ -23,30 +21,26 @@ function App() {
   }, []);
   
   return (
-    <DisplayContext.Provider value={[contentState, setContent]}>
-    <UsernameContext.Provider value={[username, setUsername]}>
-    <SocketContext.Provider value={socket}>
-    
+    <ContextManager
+      content={[contentState, setContent]}
+      username={[username, setUsername]}
+      socket={socket}
+    >
     <div className="App">
     
-      <NavBar />
+      <ToolBar />
       
       <div style={{clear: 'both'}}>
       </div>
       
-      {
-        {
-          'home': (
-            <HomeScreen />
-          ),
-        } [contentState]
-      }
+      {{
+      
+        'home': (<HomeScreen />),
+        
+      }[contentState]}
 
     </div>
-    
-    </SocketContext.Provider>
-    </UsernameContext.Provider>
-    </DisplayContext.Provider>
+    </ContextManager>
     );
 }
 

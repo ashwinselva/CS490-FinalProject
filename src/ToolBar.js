@@ -3,7 +3,7 @@ import LoginDropdown from './LoginDropdown';
 import UserPool from './UserPool';
 import UsernameContext from './UsernameContext';
 
-function NavBar({
+function ToolBar({
     isLogin,
 }) {
     
@@ -28,4 +28,4 @@ function NavBar({
     )
 }
 
-export default NavBar;
+export default ToolBar;
