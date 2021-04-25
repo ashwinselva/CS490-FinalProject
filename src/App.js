@@ -4,14 +4,25 @@ import io from 'socket.io-client';
 import ContextManager from './ContextManager';
 import ToolBar from './ToolBar';
 import HomeScreen from './HomeScreen';
+import SwitchTest from './SwitchTest';
 
 
 const socket = io(); // Connects to socket connection
 
 
 function App() {
-  const [contentState, setContent]=useState('home');
+  const [contentState, setContent]=useState('test.hi');
   const [username, setUsername] = useState('');
+  
+  function setPage(page) {
+    const pageValues = page.split('.');
+    const pageType = pageValues[0];
+    const pageData = pageValues.length==2?pageValues[1]:null;
+    return {
+      'home' : (<HomeScreen />),
+      'test' : (<SwitchTest message={pageData}/>),
+    } [pageType]
+  }
   
   useEffect(() => {
     socket.on('loginSuccess', (data) => {
@@ -33,11 +44,7 @@ function App() {
       <div style={{clear: 'both'}}>
       </div>
       
-      {{
-      
-        'home': (<HomeScreen />),
-        
-      }[contentState]}
+      {setPage(contentState)}
 
     </div>
     </ContextManager>
