@@ -23,7 +23,7 @@ SOCKETIO = SocketIO(app,
                     cors_allowed_origins="*",
                     json=json,
                     manage_session=False)
-                    
+
 db = SQLAlchemy(app)
 
 # Point SQLAlchemy to your Heroku database
@@ -32,8 +32,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 GBUCKET = 'cs490-testbucket'
-pool_name = ''
-username = ''
 
 User = model.define_user_class(db)
 Pool = model.define_pool_class(db)
@@ -46,33 +44,37 @@ PoolItem = model.define_poolitem_class(db)
 #                    manage_session=False)
 
 def add_user(new_username, new_password):
-    
+
     new_user = User(username=new_username, password=new_password)
     db.session.add(new_user)
     db.session.commit()
     return True
-        
+
 
 def add_pool(pool_name, username):
     try:
         new_pool = Pool(pool_name=pool_name, username=username)
         db.session.add(new_pool)
         db.session.commit()
+        print('Pool added')
         return True
     finally:
         return False
-        
+
 
 def add_image(image_name, image_url, pool_name):
-    new_image = Image(image_name=image_name, image_url=image_url)
-    db.session.add(new_image)
-    db.session.commit()
-    item_id = new_image.image_id
-    new_item = PoolItem(pool_name=pool_name, image_id=item_id)
-    db.session.add(new_item)
-    db.session.commit()
-    return item_id
-        
+    try:
+        new_image = Image(image_name=image_name, image_url=image_url)
+        db.session.add(new_image)
+        db.session.commit()
+        item_id = new_image.image_id
+        new_item = PoolItem(pool_name=pool_name, image_id=item_id)
+        db.session.add(new_item)
+        db.session.commit()
+        return item_id
+    finally:
+        return -1
+
 
 def reassign_image(image_id, pool_name):
     try:
@@ -82,12 +84,12 @@ def reassign_image(image_id, pool_name):
         return True
     finally:
         return False
-        
+
 def get_images(pool_Name):
     temp = PoolItem.query.filter_by(pool_name=pool_Name).all()
     pool_images = []
     for i in temp:
-        pool_images.append(image_URL(Image.query.get(i.image_id).image_url))
+        pool_images.append(Image.query.get(i.image_id).image_url)
     return pool_images
 
 
@@ -98,7 +100,7 @@ def get_pools(user_name):
         pools.append(i.pool_name)
     return pools
 
-    
+
 def get_all_pools():
     temp = Pool.query.all()
     pools = []
@@ -110,7 +112,7 @@ def get_all_pools():
 def image_URL(image_url):
     global GBUCKET
     return 'https://storage.googleapis.com/' + GBUCKET + '/' + image_url
-    
+
 def check_login(username, password):
     query = User.query.filter_by(username=username).first()
     if query is None:
@@ -137,17 +139,17 @@ def upload_image():
     bucket = storage_client.get_bucket(GBUCKET)
     img = request.files['myFile']
     image_name = img.filename
-    print(curr_pool_name)
-    add_image(image_name, secure_filename(img.filename), curr_pool_name)
+    add_pool(curr_pool_name, curr_username)
+    add_image(image_name, image_name, curr_pool_name)
     img.save(secure_filename(img.filename))
-    blob = bucket.blob(secure_filename(img.filename)) 
-    blob.upload_from_filename(secure_filename(img.filename))
-    os.remove(secure_filename(img.filename))
+    blob = bucket.blob(img.filename) 
+    blob.upload_from_filename(img.filename)
+    os.remove(img.filename)
     blob.make_public()
-    print(image_URL(secure_filename(img.filename)))
-    return(image_URL(secure_filename(img.filename)))
+    print(image_URL(img.filename))
 
-    
+
+
 @SOCKETIO.on('connect')
 def on_connect():
     """Triggered when a user connects"""
@@ -160,45 +162,45 @@ def on_disconnect():
     """Triggered when a user disconnects"""
 
     print('User disconnected')
-    
+
 @SOCKETIO.on('login')
 def on_login(data):
     """Triggered when a user logs in"""
-    
+
     print("Login")
-    
+
     username = str(data['user'])
     password = str(data['password'])
-    
+
     sid = request.sid
-    
+
     result = check_login(username, password)
-    
+
     if result:
-        SOCKETIO.emit('loginSuccess', {}, room=sid)
+        SOCKETIO.emit('loginSuccess', {}, broadcast=True, room=sid)
     else:
-        SOCKETIO.emit('loginFailed', {}, room=sid)
-    
+        SOCKETIO.emit('loginFailed', {}, broadcast=True, room=sid)
+
 @SOCKETIO.on('newUser')
 def on_new_user(data):
     """Triggered when a user adds an account"""
-    
+
     print("New User")
-    
+
     username = str(data['user'])
     password = str(data['password'])
-    
+
     sid = request.sid
-    
+
     result = add_user(username, password)
-    
+
     print(result)
-    
+
     if result:
-        SOCKETIO.emit('loginSuccess', {}, room=sid)
+        SOCKETIO.emit('loginSuccess', {}, broadcast=True, room=sid)
     else:
-        SOCKETIO.emit('loginFailed', {}, room=sid)
-        
+        SOCKETIO.emit('loginFailed', {}, broadcast=True, room=sid)
+
 @SOCKETIO.on('viewpools')
 def on_view_pools(data):
     sid = request.sid
@@ -212,25 +214,6 @@ def on_view_pools(data):
     print(pools_and_images)
     SOCKETIO.emit('response', pools_and_images, Broadcast = True, room=sid)
 
-    
-@SOCKETIO.on('fetchPools')
-def on_fetch_pools(data):
-    sid = request.sid
-    response = get_pools(str(data['username']))
-    SOCKETIO.emit('list pools', {'poolList' : response}, room=sid)
-    print('fetched pools')
-    
-@SOCKETIO.on('fetchImages')
-def on_fetch_images(data):
-    sid = request.sid
-    response = get_images(str(data['pool']))
-    SOCKETIO.emit('list images', {'imageList' : response}, room=sid)
-    print('fetched images')
-    
-@SOCKETIO.on('newPool')
-def on_new_pool(data):
-    add_pool(str(data['pool_name']), str(data['username']))
->>>>>>> cd4089ede83a5150ed1cc2229a4baff83cdd9163
 
 SOCKETIO.run(
         app,
