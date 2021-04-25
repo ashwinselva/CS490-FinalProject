@@ -4,7 +4,9 @@ import 'react-dropdown/style.css';
 import UsernameContext from './UsernameContext';
 
 
-function Upload(props) {
+function Upload({
+  poolName,
+}) {
   
   const [username, setUsername] = useContext(UsernameContext);
   
@@ -13,7 +15,7 @@ const changeHandler = (event) => {
   const formData = new FormData()
   console.log(files[0])
   formData.append('myFile', files[0])
-  formData.append('poolName', props.poolName)
+  formData.append('poolName', poolName)
   formData.append('username', username)
   
   

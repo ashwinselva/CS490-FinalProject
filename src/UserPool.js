@@ -5,7 +5,7 @@ import ImageList from "./ImageList";
 import SocketContext from "./SocketContext";
 import UsernameContext from './UsernameContext';
 
-export default function UserPool(props){
+export default function UserPool({}){
     const [viewMode, setView] = useState(false);
     const inputRef = useRef(null);
     const [isConfirmed, setConfirmed] = useState(false);

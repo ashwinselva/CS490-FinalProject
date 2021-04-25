@@ -1,8 +1,7 @@
 import React, {useState, useRef, useContext} from 'react';
 import SocketContext from './SocketContext';
 
-function LoginDropdown({
-}) {
+function LoginDropdown({}) {
     
     const socket = useContext(SocketContext);
     

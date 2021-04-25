@@ -10,7 +10,7 @@ import ImageList from './ImageList'
 
 const socket=io()
 
-export function ViewPools() {
+export function ViewPools({}) {
   const [allPools, setAllPools] = useState({});
   const [showGrid, setShowGrid] = useState(false)
   const [poolToShow, setPoolToShow] = useState([])
