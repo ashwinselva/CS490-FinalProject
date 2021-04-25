@@ -8,7 +8,7 @@ from flask_socketio import SocketIO
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
-import model
+
 
 load_dotenv(find_dotenv())  # This is to load your env variables from .env
 
@@ -25,6 +25,7 @@ SOCKETIO = SocketIO(app,
                     manage_session=False)
                     
 db = SQLAlchemy(app)
+import model
 
 # Point SQLAlchemy to your Heroku database
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
@@ -232,7 +233,9 @@ def on_new_pool(data):
     add_pool(str(data['pool_name']), str(data['username']))
 
 
-SOCKETIO.run(
+if __name__ == "__main__":
+    db.create_all()
+    SOCKETIO.run(
         app,
         host=os.getenv('IP', '0.0.0.0'),
         port=8081 if os.getenv('C9_PORT') else int(os.getenv('PORT', default='8081')),
