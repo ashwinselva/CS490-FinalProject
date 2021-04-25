@@ -4,14 +4,13 @@ import io from 'socket.io-client';
 import ContextManager from './ContextManager';
 import ToolBar from './ToolBar';
 import HomeScreen from './HomeScreen';
-import SwitchTest from './SwitchTest';
 
 
 const socket = io(); // Connects to socket connection
 
 
 function App() {
-  const [contentState, setContent]=useState('test.hi');
+  const [contentState, setContent]=useState('home');
   const [username, setUsername] = useState('');
   
   function setPage(page) {
@@ -20,7 +19,6 @@ function App() {
     const pageData = pageValues.length==2?pageValues[1]:null;
     return {
       'home' : (<HomeScreen />),
-      'test' : (<SwitchTest message={pageData}/>),
     } [pageType]
   }
   
