@@ -1,18 +1,20 @@
-import React, {useState} from 'react';
-import io from 'socket.io-client';
+import React, {useState, useContext} from 'react';
+import UsernameContext from './UsernameContext';
 
-function ImgDrop(props) {
+function ImgDrop({
+    poolName
+}) {
     const [inZone, setInZone] = useState(false);
     const [fileList, setFileList] = useState([]);
     
-    const socket = props.socket;
+    const [username, setUsername] = useContext(UsernameContext);
     
     function uploadFile(file) {
         const formData = new FormData();
         console.log(file);
         formData.append('myFile', file);
-        formData.append('poolName', props.poolName);
-        formData.append('username', props.username);
+        formData.append('poolName', poolName);
+        formData.append('username', username);
         
         fetch('/saveImage', {
             method: 'POST',
