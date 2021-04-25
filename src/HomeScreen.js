@@ -2,14 +2,12 @@ import React from 'react';
 import Search from './Search';
 import ViewPools from './ViewPools';
 
-function HomeScreen({
-    username,
-}) {
+function HomeScreen({}) {
     
     return (
         <div>
             <Search />
-            <ViewPools username={username}/>
+            <ViewPools />
         </div>
     )
 }
