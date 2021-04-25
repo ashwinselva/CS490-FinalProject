@@ -3,9 +3,7 @@ import LoginDropdown from './LoginDropdown';
 import UserPool from './UserPool';
 import UsernameContext from './UsernameContext';
 
-function ToolBar({
-    isLogin,
-}) {
+function ToolBar({}) {
     
     const [username, setUsername] = useContext(UsernameContext);
     
