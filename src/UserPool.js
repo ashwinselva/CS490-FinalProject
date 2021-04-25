@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import Upload from "./Upload";
-import ImgDrop from "./imgDrop";
+import ImgDrop from "./ImgDrop";
 import ImageList from "./ImageList";
 import SocketContext from "./SocketContext";
 import UsernameContext from './UsernameContext';
