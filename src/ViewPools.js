@@ -1,19 +1,19 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import Upload from './Upload';
-import io from 'socket.io-client';
 import UserPool from './UserPool';
 import ImageList from './ImageList'
+import SocketContext from './SocketContext';
 
-const socket=io()
-
-export function ViewPools() {
+export function ViewPools({}) {
   const [allPools, setAllPools] = useState({});
   const [showGrid, setShowGrid] = useState(false)
   const [poolToShow, setPoolToShow] = useState([])
+  
+  const socket = useContext(SocketContext)
   
   function getPoolNames(){
       socket.emit('viewpools', [])
