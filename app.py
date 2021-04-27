@@ -230,6 +230,13 @@ def on_fetch_images(data):
 @SOCKETIO.on('newPool')
 def on_new_pool(data):
     add_pool(str(data['pool_name']), str(data['username']))
+    
+@SOCKETIO.on('search')
+def on_search(data):
+    searchText = data["searchText"]
+    option = data["option"]
+    print(data["searchText"])
+    print(data["option"])
 
 
 SOCKETIO.run(
