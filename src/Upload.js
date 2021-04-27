@@ -1,20 +1,22 @@
 import './App.css';
-import React, { useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect, useContext} from 'react';
 import 'react-dropdown/style.css';
-import io from 'socket.io-client';
+import UsernameContext from './UsernameContext';
 
 
-const socket = io();
-
-function Upload(props) {
+function Upload({
+  poolName,
+}) {
+  
+  const [username, setUsername] = useContext(UsernameContext);
   
 const changeHandler = (event) => {
   const files = event.target.files
   const formData = new FormData()
   console.log(files[0])
   formData.append('myFile', files[0])
-  formData.append('poolName', props.poolName)
-  formData.append('username', props.username)
+  formData.append('poolName', poolName)
+  formData.append('username', username)
   
   
   fetch('/saveImage', {

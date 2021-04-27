@@ -175,7 +175,7 @@ def on_login(data):
     result = check_login(username, password)
     
     if result:
-        SOCKETIO.emit('loginSuccess', {}, room=sid)
+        SOCKETIO.emit('loginSuccess', {'username':username}, room=sid)
     else:
         SOCKETIO.emit('loginFailed', {}, room=sid)
     
@@ -195,7 +195,7 @@ def on_new_user(data):
     print(result)
     
     if result:
-        SOCKETIO.emit('loginSuccess', {}, room=sid)
+        SOCKETIO.emit('loginSuccess', {'username':username}, room=sid)
     else:
         SOCKETIO.emit('loginFailed', {}, room=sid)
         
@@ -206,8 +206,12 @@ def on_view_pools(data):
     pools_and_images = {}
     for i in all_pools:
         pools_and_images[i] = get_images(i)
+    for i in pools_and_images:
+        for j in range(len(pools_and_images[i])):
+            pools_and_images[i][j] = image_URL(pools_and_images[i][j])
     print(pools_and_images)
-    SOCKETIO.emit('response', pools_and_images, room=sid)
+    SOCKETIO.emit('response', pools_and_images, Broadcast = True, room=sid)
+
     
 @SOCKETIO.on('fetchPools')
 def on_fetch_pools(data):
@@ -226,6 +230,7 @@ def on_fetch_images(data):
 @SOCKETIO.on('newPool')
 def on_new_pool(data):
     add_pool(str(data['pool_name']), str(data['username']))
+
 
 SOCKETIO.run(
         app,
