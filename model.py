@@ -54,19 +54,8 @@ def define_poolitem_class(db):
     return PoolItem
 
 
-def define_tag_class(db):
-    class Tag(db.Model):
-        __tablename__ = 'Tags'
-        tag = db.Column(db.String(80), primary_key=True)
-        
-        def __repr__(self):
-            return '<Tag %r>' % (self.tag)
-    
-    return Tag
-
-
 def define_imagetag_class(db):
-    class ImageTag(db.model):
+    class ImageTag(db.Model):
         __tablename__ = 'ImageTag'
         tag = db.Column(db.String(80), primary_key=True)
         image_id = db.Column(db.Integer, primary_key=True, autoincrement=False)

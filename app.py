@@ -39,6 +39,7 @@ User = model.define_user_class(db)
 Pool = model.define_pool_class(db)
 Image = model.define_image_class(db)
 PoolItem = model.define_poolitem_class(db)
+ImageTag = model.define_imagetag_class(db)
 
 #SOCKETIO = SocketIO(app,
 #                    cors_allowed_origins="*",
