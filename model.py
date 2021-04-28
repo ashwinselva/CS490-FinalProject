@@ -3,6 +3,7 @@
 #db.Column('image_id',db.Integer, db.ForeignKey('Images.id'), primary_key=True),
 #db.Column('tag',db.String(80), db.ForeignKey('Tags.tag'), primary_key=True)
 #)
+from app import db
 
 def define_image_class(db):
     class Image(db.Model):

@@ -234,7 +234,7 @@ def on_new_pool(data):
 
 
 if __name__ == "__main__":
-    db.create_all()
+    model.db.create_all()
     SOCKETIO.run(
         app,
         host=os.getenv('IP', '0.0.0.0'),
