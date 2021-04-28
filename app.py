@@ -36,10 +36,10 @@ GBUCKET = 'cs490-testbucket'
 pool_name = ''
 username = ''
 
-User = model.define_user_class(db)
-Pool = model.define_pool_class(db)
-Image = model.define_image_class(db)
-PoolItem = model.define_poolitem_class(db)
+#User = model.define_user_class(db)
+#Pool = model.define_pool_class(db)
+#Image = model.define_image_class(db)
+#PoolItem = model.define_poolitem_class(db)
 
 #SOCKETIO = SocketIO(app,
 #                    cors_allowed_origins="*",
@@ -47,8 +47,8 @@ PoolItem = model.define_poolitem_class(db)
 #                    manage_session=False)
 
 def add_user(new_username, new_password):
-    
-    new_user = User(username=new_username, password=new_password)
+    new_user = model.User(username=new_username, password=new_password)
+    #new_user = User(username=new_username, password=new_password)
     db.session.add(new_user)
     db.session.commit()
     return True
@@ -56,7 +56,8 @@ def add_user(new_username, new_password):
 
 def add_pool(pool_name, username):
     try:
-        new_pool = Pool(pool_name=pool_name, username=username)
+        new_pool = model.Pool(pool_name=pool_name, username=username)
+        #new_pool = Pool(pool_name=pool_name, username=username)
         db.session.add(new_pool)
         db.session.commit()
         return True
@@ -65,11 +66,13 @@ def add_pool(pool_name, username):
         
 
 def add_image(image_name, image_url, pool_name):
-    new_image = Image(image_name=image_name, image_url=image_url)
+    new_image = model.Image(image_name=image_name, image_url=image_url)
+    #new_image = Image(image_name=image_name, image_url=image_url)
     db.session.add(new_image)
     db.session.commit()
     item_id = new_image.image_id
-    new_item = PoolItem(pool_name=pool_name, image_id=item_id)
+    new_item = model.PoolItem(pool_name=pool_name, image_id=item_id)
+    #new_item = PoolItem(pool_name=pool_name, image_id=item_id)
     db.session.add(new_item)
     db.session.commit()
     return item_id
@@ -77,7 +80,8 @@ def add_image(image_name, image_url, pool_name):
 
 def reassign_image(image_id, pool_name):
     try:
-        new_item = PoolItem(pool_name=pool_name, image_id=image_id)
+        new_item = model.PoolItem(pool_name=pool_name, image_id=image_id)
+        #new_item = PoolItem(pool_name=pool_name, image_id=image_id)
         db.session.add(new_item)
         db.session.commit()
         return True
@@ -85,15 +89,15 @@ def reassign_image(image_id, pool_name):
         return False
         
 def get_images(pool_Name):
-    temp = PoolItem.query.filter_by(pool_name=pool_Name).all()
+    temp = model.PoolItem.query.filter_by(pool_name=pool_Name).all()
     pool_images = []
     for i in temp:
-        pool_images.append(image_URL(Image.query.get(i.image_id).image_url))
+        pool_images.append(image_URL(model.Image.query.get(i.image_id).image_url))
     return pool_images
 
 
 def get_pools(user_name):
-    temp = Pool.query.filter_by(username = user_name).all()
+    temp = model.Pool.query.filter_by(username = user_name).all()
     pools = []
     for i in temp:
         pools.append(i.pool_name)
@@ -101,7 +105,7 @@ def get_pools(user_name):
 
     
 def get_all_pools():
-    temp = Pool.query.all()
+    temp = model.Pool.query.all()
     pools = []
     for i in temp:
         pools.append(i.pool_name)
@@ -113,7 +117,7 @@ def image_URL(image_url):
     return 'https://storage.googleapis.com/' + GBUCKET + '/' + image_url
     
 def check_login(username, password):
-    query = User.query.filter_by(username=username).first()
+    query = model.User.query.filter_by(username=username).first()
     if query is None:
         return False
     return password == query.password
