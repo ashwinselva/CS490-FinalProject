@@ -2,6 +2,8 @@ import React, {useState, useRef, useContext} from 'react';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import SocketContext from './SocketContext';
+import ContentContext from './ContentContext';
+
 
 
 function Search({}) {
@@ -20,8 +22,8 @@ function Search({}) {
         
     const searchRef = useRef(null);
     const socket = useContext(SocketContext)
-    const [option, setOption] = useState()
-    const defaultOption = options[0]
+    const [option, setOption] = useState("Keyword")
+    const [page, setPage] = useContext(ContentContext)
     
     function onSearch() {
         console.log();
@@ -30,7 +32,9 @@ function Search({}) {
             searchText: searchText,
             option : option
         });
-        
+        var searchString = "search."
+        searchString = searchString.concat(searchText)
+        setPage(searchString)
     }
     
     const dropVal=(e)=>{

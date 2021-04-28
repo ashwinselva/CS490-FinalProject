@@ -235,8 +235,18 @@ def on_new_pool(data):
 def on_search(data):
     searchText = data["searchText"]
     option = data["option"]
-    print(data["searchText"])
-    print(data["option"])
+    sid = request.sid
+    imageData = []
+    if option == 'Username':
+        pools_for_username = get_pools(searchText)
+        for poolName in pools_for_username:
+            imageData.append(get_images(poolName))
+    elif option == 'Keyword':
+        imageData.append(get_images(searchText))
+    elif option == 'Tag':
+        imageData.append(get_images(searchText))
+        
+    SOCKETIO.emit('search results', {'imageList' : imageData}, room=sid)
 
 
 SOCKETIO.run(
