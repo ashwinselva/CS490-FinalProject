@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import ContextManager from './ContextManager';
 import ToolBar from './ToolBar';
 import HomeScreen from './HomeScreen';
+import Sketchit from './Sketchit';
 
 
 const socket = io(); // Connects to socket connection
@@ -19,6 +20,8 @@ function App() {
     const pageData = pageValues.length==2?pageValues[1]:null;
     return {
       'home' : (<HomeScreen />),
+      'sketchit' : (<Sketchit poolName={pageData} />),
+      'viewPool' : (<div>{pageData}</div>),
     } [pageType]
   }
   
