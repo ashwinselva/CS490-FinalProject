@@ -51,6 +51,7 @@ def add_user(new_username, new_password):
     #new_user = User(username=new_username, password=new_password)
     db.session.add(new_user)
     db.session.commit()
+    print('user added: '+ new_username)
     return True
         
 
@@ -60,6 +61,7 @@ def add_pool(pool_name, username):
         #new_pool = Pool(pool_name=pool_name, username=username)
         db.session.add(new_pool)
         db.session.commit()
+        print('pool added: '+ pool_name)
         return True
     finally:
         return False
@@ -75,6 +77,7 @@ def add_image(image_name, image_url, pool_name):
     #new_item = PoolItem(pool_name=pool_name, image_id=item_id)
     db.session.add(new_item)
     db.session.commit()
+    print('image added: '+image_name)
     return item_id
         
 
