@@ -17,12 +17,17 @@ function SearchPage(props) {
     }
     useEffect(() => {
         socket.on('search results', (data) => {
-            setImageUrls(data.imageList[0])
-            if (data.imageList.length === 0){
-                setResultFound(false)
+            setImageUrls(data.imageList)
+            if (data.imageList.length){
+                if(data.imageList[0].length){
+                    setResultFound(true)
+                }
+                else{
+                    setResultFound(false)
+                }
             }
             else{
-                setResultFound(true)
+                setResultFound(false)
             }
             console.log(data);
         });
@@ -39,7 +44,7 @@ function SearchPage(props) {
                 <ImageList imageList={imageUrls} />
             </div>
             ) : (
-                <h1> No Results Found </h1>
+                <h1> No Results Found for {props.pageData} </h1>
             )}
         </div>
     )
