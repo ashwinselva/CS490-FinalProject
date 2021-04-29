@@ -229,7 +229,9 @@ def on_fetch_images(data):
     
 @SOCKETIO.on('newPool')
 def on_new_pool(data):
+    print('pool name: '+ str(data))
     add_pool(str(data['pool_name']), str(data['username']))
+    
 
 
 SOCKETIO.run(

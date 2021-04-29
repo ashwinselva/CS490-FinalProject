@@ -33,10 +33,12 @@ export default function UserPool({}){
     }
     
     function onConfirmButton(){
+        console.log('enter')
         setConfirmed(true);
         const userText = inputRef.current.value;
+        console.log(userText)
         setPool(userText);
-        socket.emit('newPool', {pool_name:currentPool, username:username});
+        socket.emit('newPool', {pool_name:userText, username:username});
         console.log(isConfirmed);
     }
     
