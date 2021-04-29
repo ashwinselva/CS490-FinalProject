@@ -89,7 +89,14 @@ def get_images(pool_Name):
     for i in temp:
         pool_images.append(image_URL(Image.query.get(i.image_id).image_url))
     return pool_images
-
+    
+def get_images_by_name(search_text):
+    all_images = Image.query.all()
+    image_search = []
+    for image in all_images:
+        if search_text.lower() in image.image_name.lower():
+            image_search.append(image.image_url)
+    return image_search
 
 def get_pools(user_name):
     temp = Pool.query.filter_by(username = user_name).all()
@@ -242,10 +249,11 @@ def on_search(data):
         for poolName in pools_for_username:
             imageData.append(get_images(poolName))
     elif option == 'Keyword':
-        imageData.append(get_images(searchText))
+        imageData.append(get_images_by_name(searchText))
     elif option == 'Tag':
         imageData.append(get_images(searchText))
         
+    print(imageData)
     SOCKETIO.emit('search results', {'imageList' : imageData}, room=sid)
 
 
