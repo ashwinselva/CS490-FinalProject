@@ -33,7 +33,6 @@ export default function UserPool({}){
     }
     
     function onConfirmButton(){
-        console.log('enter')
         setConfirmed(true);
         const userText = inputRef.current.value;
         console.log(userText)
