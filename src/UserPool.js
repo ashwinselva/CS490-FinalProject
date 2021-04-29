@@ -36,7 +36,7 @@ export default function UserPool({}){
         setConfirmed(true);
         const userText = inputRef.current.value;
         setPool(userText);
-        socket.emit('newPool', {pool_name:currentPool, username:username});
+        socket.emit('newPool', {pool_name:userText, username:username});
         console.log(isConfirmed);
     }
     
