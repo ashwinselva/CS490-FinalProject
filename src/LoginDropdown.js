@@ -47,7 +47,11 @@ function LoginDropdown({}) {
                 <div>
                 <br />
                 <label>
+<<<<<<< HEAD
                     Login-ID:
+=======
+                    Login-ID
+>>>>>>> 5f94f38fa6c3062fb24db1a375d6705e70fc7939
                     <input ref={usernameRef} type="text"/>
                 </label>
                 <br />

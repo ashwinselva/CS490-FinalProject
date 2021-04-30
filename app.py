@@ -89,7 +89,18 @@ def get_images(pool_Name):
     for i in temp:
         pool_images.append(image_URL(Image.query.get(i.image_id).image_url))
     return pool_images
+<<<<<<< HEAD
 
+=======
+    
+def get_images_by_name(search_text):
+    all_images = Image.query.all()
+    image_search = []
+    for image in all_images:
+        if search_text.lower() in image.image_name.lower():
+            image_search.append(image.image_url)
+    return image_search
+>>>>>>> 5f94f38fa6c3062fb24db1a375d6705e70fc7939
 
 def get_pools(user_name):
     temp = Pool.query.filter_by(username = user_name).all()
@@ -206,9 +217,15 @@ def on_view_pools(data):
     pools_and_images = {}
     for i in all_pools:
         pools_and_images[i] = get_images(i)
+<<<<<<< HEAD
     for i in pools_and_images:
         for j in range(len(pools_and_images[i])):
             pools_and_images[i][j] = image_URL(pools_and_images[i][j])
+=======
+    #for i in pools_and_images:
+    #    for j in range(len(pools_and_images[i])):
+    #        pools_and_images[i][j] = image_URL(pools_and_images[i][j])
+>>>>>>> 5f94f38fa6c3062fb24db1a375d6705e70fc7939
     print(pools_and_images)
     SOCKETIO.emit('response', pools_and_images, Broadcast = True, room=sid)
 
@@ -229,9 +246,32 @@ def on_fetch_images(data):
     
 @SOCKETIO.on('newPool')
 def on_new_pool(data):
+<<<<<<< HEAD
     print('pool name: '+ str(data))
     add_pool(str(data['pool_name']), str(data['username']))
     
+=======
+    add_pool(str(data['pool_name']), str(data['username']))
+    
+@SOCKETIO.on('search')
+def on_search(data):
+    searchText = data["searchText"]
+    option = data["option"]
+    sid = request.sid
+    imageData = []
+    if option == 'Username':
+        pools_for_username = get_pools(searchText)
+        for poolName in pools_for_username:
+            imageData.append(get_images(poolName))
+    elif option == 'Keyword':
+        imageData.append(get_images_by_name(searchText))
+    elif option == 'Tag':
+        imageData.append(get_images(searchText))
+        
+    print(imageData)
+    SOCKETIO.emit('search results', {'imageList' : imageData}, room=sid)
+
+>>>>>>> 5f94f38fa6c3062fb24db1a375d6705e70fc7939
 
 
 SOCKETIO.run(

@@ -8,6 +8,10 @@
     "react-dom": "^17.0.1",
     "react-dropdown": "^1.9.2",
     "react-scripts": "4.0.2",
+<<<<<<< HEAD
+=======
+    "react-timer-hook": "^3.0.2",
+>>>>>>> 5f94f38fa6c3062fb24db1a375d6705e70fc7939
     "socket.io-client": "^3.1.2",
     "web-vitals": "^1.1.0"
   },
@@ -36,4 +40,8 @@
     ]
   },
   "proxy": "http://localhost:8081"
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 5f94f38fa6c3062fb24db1a375d6705e70fc7939
