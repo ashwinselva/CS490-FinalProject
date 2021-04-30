@@ -17,9 +17,9 @@ function SearchPage(props) {
     }
     useEffect(() => {
         socket.on('search results', (data) => {
-            setImageUrls(data.imageList)
             if (data.imageList.length){
                 if(data.imageList[0].length){
+                    setImageUrls(data.imageList[0])
                     setResultFound(true)
                 }
                 else{

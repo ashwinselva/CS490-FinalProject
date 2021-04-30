@@ -96,7 +96,7 @@ def get_images_by_name(search_text):
     image_search = []
     for image in all_images:
         if search_text.lower() in image.image_name.lower():
-            image_search.append(image.image_url)
+            image_search.append(image_URL(Image.query.get(image.image_id).image_url))
     return image_search
 
 def get_pools(user_name):
