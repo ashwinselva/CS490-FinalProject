@@ -249,7 +249,9 @@ def on_search(data):
         pools_for_username = get_pools(searchText)
         for poolName in pools_for_username:
             imageData.append(get_images(poolName))
-    elif option == 'Keyword':
+    elif option == 'Pool':
+        imageData.append(get_images(searchText))
+    elif option == 'Image Name':
         imageData.append(get_images_by_name(searchText))
     elif option == 'Tag':
         imageData.append(get_images(searchText))
