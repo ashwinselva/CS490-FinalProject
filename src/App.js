@@ -5,12 +5,9 @@ import ContextManager from './ContextManager';
 import ToolBar from './ToolBar';
 import HomeScreen from './HomeScreen';
 
-<<<<<<< HEAD
-=======
 import Sketchit from './Sketchit';
 
 import SearchPage from './SearchPage';
->>>>>>> 5f94f38fa6c3062fb24db1a375d6705e70fc7939
 
 const socket = io(); // Connects to socket connection
 
@@ -25,12 +22,9 @@ function App() {
     const pageData = pageValues.length==2?pageValues[1]:null;
     return {
       'home' : (<HomeScreen />),
-<<<<<<< HEAD
-=======
       'sketchit' : (<Sketchit poolName={pageData} />),
       'viewPool' : (<div>{pageData}</div>),
       'search': (<SearchPage pageData={pageData}/>)
->>>>>>> 5f94f38fa6c3062fb24db1a375d6705e70fc7939
     } [pageType]
   }
   

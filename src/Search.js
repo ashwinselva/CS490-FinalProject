@@ -17,12 +17,8 @@ function Search({}) {
     const options = [
         'Keyword',
         'Tag',
-<<<<<<< HEAD
-        'Random Images'
-=======
         'Username',
         'Random Images',
->>>>>>> 5f94f38fa6c3062fb24db1a375d6705e70fc7939
         ];
     
     const buttonstyle = {
@@ -31,17 +27,6 @@ function Search({}) {
         };
         
     const searchRef = useRef(null);
-<<<<<<< HEAD
-    
-    function onSearch() {
-        console.log('search');
-    }
-    
-    return (
-        <div>
-        <button style={buttonstyle}>
-            <Dropdown style={buttonstyle} options={options} placeholder="Search by" />
-=======
     const socket = useContext(SocketContext)
     const [option, setOption] = useState("Keyword")
     const [page, setPage] = useContext(ContentContext)
@@ -67,7 +52,6 @@ function Search({}) {
         <div>
         <button style={buttonstyle}>
             <Dropdown onChange={dropVal} style={buttonstyle} options={options} placeholder="Search by" />
->>>>>>> 5f94f38fa6c3062fb24db1a375d6705e70fc7939
         </button>
         <input ref={searchRef} type="text" />
         <button type="button" onClick={onSearch}>
