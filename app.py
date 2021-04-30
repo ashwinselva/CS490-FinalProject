@@ -12,8 +12,9 @@ import model
 
 load_dotenv(find_dotenv())  # This is to load your env variables from .env
 
-__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=os.path.join(__location__, 'cs490-finalproject-026394783be7.json')
+#__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+#os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=os.path.join(__location__, 'cs490-finalproject-026394783be7.json')
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 
 app = Flask(__name__, static_folder='./build/static')
 
@@ -236,9 +237,25 @@ def on_fetch_images(data):
     
 @SOCKETIO.on('newPool')
 def on_new_pool(data):
-    print('pool name: '+ str(data))
     add_pool(str(data['pool_name']), str(data['username']))
     
+@SOCKETIO.on('search')
+def on_search(data):
+    searchText = data["searchText"]
+    option = data["option"]
+    sid = request.sid
+    imageData = []
+    if option == 'Username':
+        pools_for_username = get_pools(searchText)
+        for poolName in pools_for_username:
+            imageData.append(get_images(poolName))
+    elif option == 'Keyword':
+        imageData.append(get_images_by_name(searchText))
+    elif option == 'Tag':
+        imageData.append(get_images(searchText))
+        
+    print(imageData)
+    SOCKETIO.emit('search results', {'imageList' : imageData}, room=sid)
 
 
 

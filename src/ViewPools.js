@@ -7,10 +7,7 @@ import Upload from './Upload';
 import UserPool from './UserPool';
 import ImageList from './ImageList'
 import SocketContext from './SocketContext';
-<<<<<<< HEAD
-=======
 import ContentContext from './ContentContext';
->>>>>>> 5f94f38fa6c3062fb24db1a375d6705e70fc7939
 
 export function ViewPools({}) {
   const [allPools, setAllPools] = useState({});

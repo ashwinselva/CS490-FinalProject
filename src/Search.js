@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import React, {useState, useRef} from 'react';
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
-=======
 import React, {useState, useRef, useContext} from 'react';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
@@ -10,7 +5,6 @@ import SocketContext from './SocketContext';
 import ContentContext from './ContentContext';
 
 
->>>>>>> 5f94f38fa6c3062fb24db1a375d6705e70fc7939
 
 function Search({}) {
     
