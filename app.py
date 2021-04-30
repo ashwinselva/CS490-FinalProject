@@ -12,8 +12,9 @@ import model
 
 load_dotenv(find_dotenv())  # This is to load your env variables from .env
 
-__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=os.path.join(__location__, 'cs490-finalproject-026394783be7.json')
+#__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+#os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=os.path.join(__location__, 'cs490-finalproject-026394783be7.json')
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 
 app = Flask(__name__, static_folder='./build/static')
 
