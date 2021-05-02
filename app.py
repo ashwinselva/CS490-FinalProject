@@ -84,6 +84,12 @@ def reassign_image(image_id, pool_name):
     finally:
         return False
         
+def add_tag(tag_name, image_id):
+    new_tag = ImageTag(tag=tag_name, image_id=image_id)
+    db.session.add(new_tag)
+    db.session.commit()
+    return tag_name
+        
 def get_images(pool_Name):
     temp = PoolItem.query.filter_by(pool_name=pool_Name).all()
     pool_images = []
