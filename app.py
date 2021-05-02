@@ -8,6 +8,7 @@ from flask_socketio import SocketIO
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
+from random import sample
 import model
 
 load_dotenv(find_dotenv())  # This is to load your env variables from .env
@@ -103,8 +104,19 @@ def get_images_by_name(search_text):
     image_search = []
     for image in all_images:
         if search_text.lower() in image.image_name.lower():
-            image_search.append(image_URL(Image.query.get(image.image_id).image_url))
+            image_search.append(image_URL(image.image_url))
     return image_search
+
+def get_random_images(ammount):
+    urls = []
+    images = Image.query.all()
+    if len(images) <= ammount:
+        for i in images:
+            urls.append(image_URL(i.image_url))
+    else:
+        urls = sample(images, ammount)
+        
+    return urls
 
 def get_pools(user_name):
     temp = Pool.query.filter_by(username = user_name).all()
