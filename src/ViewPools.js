@@ -68,6 +68,7 @@ export function ViewPools({}) {
               {poolToShow.map(image => (
               <img src = {image} height="100" width="100" />
               ))}
+              <h1>{" "}</h1>
               <button onClick={() => setContent('sketchit.'+currentPool)}>Start Sketching</button>
               </div>
         ) : null}
