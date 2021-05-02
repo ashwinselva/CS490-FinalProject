@@ -9,7 +9,8 @@ import ContentContext from './ContentContext';
 function Search({}) {
     
     const options = [
-        'Keyword',
+        'Image Name',
+        'Pool',
         'Tag',
         'Username',
         'Random Images',
@@ -22,7 +23,7 @@ function Search({}) {
         
     const searchRef = useRef(null);
     const socket = useContext(SocketContext)
-    const [option, setOption] = useState("Keyword")
+    const [option, setOption] = useState("Image Name")
     const [page, setPage] = useContext(ContentContext)
     
     function onSearch() {
