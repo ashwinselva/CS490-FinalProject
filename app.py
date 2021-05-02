@@ -115,6 +115,8 @@ def get_random_images(ammount):
             urls.append(image_URL(i.image_url))
     else:
         urls = sample(images, ammount)
+        
+    return urls
 
 def get_pools(user_name):
     temp = Pool.query.filter_by(username = user_name).all()
