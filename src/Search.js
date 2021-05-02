@@ -15,7 +15,7 @@ function Search({}) {
         'Username',
         'Random Images',
         ];
-    
+        
     const buttonstyle = {
         background: "transparent",
         border: "none"
@@ -25,13 +25,16 @@ function Search({}) {
     const socket = useContext(SocketContext)
     const [option, setOption] = useState("Image Name")
     const [page, setPage] = useContext(ContentContext)
+    const [randomImage, setRandom] = useState(false)
+    const [imageNumber, setImageNumber] = useState(0)
     
     function onSearch() {
         console.log();
         const searchText = searchRef.current.value;
         socket.emit('search',{
             searchText: searchText,
-            option : option
+            option : option,
+            imageNumber : imageNumber
         });
         var searchString = "search."
         searchString = searchString.concat(searchText)
@@ -40,6 +43,17 @@ function Search({}) {
     
     const dropVal=(e)=>{
         setOption(e["value"])
+        if (e["value"] == 'Random Images'){
+            setRandom(true)
+        }
+        else{
+            setRandom(false)
+        }
+     }
+     
+     const imageCount=(e)=>{
+        setImageNumber(e["value"])
+        console.log(imageNumber)
      }
     
     
@@ -48,7 +62,11 @@ function Search({}) {
         <button style={buttonstyle}>
             <Dropdown onChange={dropVal} style={buttonstyle} options={options} placeholder="Search by" />
         </button>
-        <input ref={searchRef} type="text" />
+        {randomImage === true ? (
+            <input ref={searchRef} type="text" placeholder="Enter number of images"/>       
+            ) : (
+            <input ref={searchRef} type="text" />
+            )}
         <button type="button" onClick={onSearch}>
             Search
         </button>

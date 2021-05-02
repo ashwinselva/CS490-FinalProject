@@ -6,7 +6,6 @@ function HomeScreen({}) {
     
     return (
         <div>
-            <Search />
             <ViewPools />
         </div>
     )
