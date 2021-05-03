@@ -43,7 +43,7 @@ function ImgDrop({
     }
     
     return (
-        <div className={'imgDrop'}
+        <div className='imgDrop'
             onDragEnter={e => handleDragEnter(e)}
             onDragLeave={e => handleDragLeave(e)}
             onDragOver={e => handleDragOver(e)}

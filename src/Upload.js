@@ -15,7 +15,7 @@ function Upload({
 
   
   return (
-    <div className="App">
+    <div style={{paddingLeft:'75px'}}>
        <input type="file" name="file" onChange={changeHandler} />
     </div>
     

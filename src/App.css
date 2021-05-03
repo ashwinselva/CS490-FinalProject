@@ -30,7 +30,9 @@
 }
 
 .App-header-row {
-  min-width: 100vw;
+  min-width: 80vw;
+  padding-left: 2vw;
+  padding-right:2vw;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -41,6 +43,7 @@
 .Sketchit-app {
   height: 70%;
   width: 100%;
+  background-color: black;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,4 +51,20 @@
   font-size: calc(10px + 2vmin);
   color: black;
   
+}
+
+.Sketchit-options {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border-style: solid;
+}
+
+label {
+  display: flex;
+  align-items: center;
 }

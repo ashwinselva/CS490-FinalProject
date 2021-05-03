@@ -82,13 +82,13 @@ function UploadImg({
     }
     
     return (
-        <div>
+        <div className='App-header-row'>
             <div className='App-header' style={{width:'60%'}}>
                 <div className='Sketchit-app'>
                     {imageUrl!=''?(
                         <img src={imageUrl} style={{objectFit:'contain', width:'100%', height:'100%'}}/>
                     ):(
-                        <div>
+                        <div className='Sketchit-options'>
                             <Upload changeHandler={changeHandler}/>
                             <ImgDrop uploadFile={uploadFile}/>
                         </div>
@@ -99,40 +99,58 @@ function UploadImg({
                 ):(null)}
                 
             </div>
-            <div className='App-header' style={{width:'25%'}}>
-                Tags
+            <div className='App-header' style={{
+                    width:'25%', 
+                    justifyContent:'flex-start', 
+                    alignItems:'flex-start',
+                }}>
+                <div style={{
+                    textAlign:'left',
+                    justifyContent:'center', 
+                    alignItems:'center',
+                    minHeight:'70%',
+                    width:'100%',
+                    display:'flex',
+                    flexDirection:'column',
+                }}>
+                <div style={{verticalAlign:'middle', flexDirection:'column'}}>
+                Tags:
                 <br/>
-                <lable>
-                    Pose
+                <label>
                     <input type='checkbox' checked={tags['Pose']} onChange={() => toggleTag('Pose')}/>
-                </lable>
-                <lable>
-                    Animal
+                    Pose
+                </label>
+                <label>
                     <input type='checkbox' checked={tags['Animal']} onChange={() => toggleTag('Animal')}/>
-                </lable>
-                <lable>
-                    Object
+                    Animal
+                </label>
+                <label>
                     <input type='checkbox' checked={tags['Obj']} onChange={() => toggleTag('Obj')}/>
-                </lable>
-                <lable>
-                    Costume
+                    Object
+                </label>
+                <label>
                     <input type='checkbox' checked={tags['Costume']} onChange={() => toggleTag('Costume')}/>
-                </lable>
-                <lable>
-                    Face
+                    Costume
+                </label>
+                <label>
                     <input type='checkbox' checked={tags['Face']} onChange={() => toggleTag('Face')}/>
-                </lable>
-                <lable>
-                    Anatomy
+                    Face
+                </label>
+                <label>
                     <input type='checkbox' checked={tags['Anatomy']} onChange={() => toggleTag('Anatomy')}/>
-                </lable>
-                <lable>
-                    Scenery
+                    Anatomy
+                </label>
+                <label>
                     <input type='checkbox' checked={tags['Scenery']} onChange={() => toggleTag('Scenery')}/>
-                </lable>
+                    Scenery
+                </label>
+                </div>
+                </div>
             </div>
             <div className='App-header' style={{width:'15%'}}>
+            <div style={{width:'100%', display:'flex', justifyContent:'flex-end'}}>
                 <button>Back</button>
+            </div>
             </div>
         </div>
     )
