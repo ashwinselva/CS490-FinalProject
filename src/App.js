@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import ContextManager from './ContextManager';
 import ToolBar from './ToolBar';
 import HomeScreen from './HomeScreen';
+import UploadImg from './UploadImg';
 
 import Sketchit from './Sketchit';
 
@@ -13,7 +14,7 @@ const socket = io(); // Connects to socket connection
 
 
 function App() {
-  const [contentState, setContent]=useState('home');
+  const [contentState, setContent]=useState('uploadImg.myFirstPool');
   const [username, setUsername] = useState('');
   
   function setPage(page) {
@@ -24,7 +25,8 @@ function App() {
       'home' : (<HomeScreen />),
       'sketchit' : (<Sketchit poolName={pageData} />),
       'viewPool' : (<div>{pageData}</div>),
-      'search': (<SearchPage pageData={pageData}/>)
+      'search': (<SearchPage pageData={pageData}/>),
+      'uploadImg': (<UploadImg poolName={pageData}/>),
     } [pageType]
   }
   
