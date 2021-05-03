@@ -14,7 +14,7 @@ const socket = io(); // Connects to socket connection
 
 
 function App() {
-  const [contentState, setContent]=useState('uploadImg.myFirstPool');
+  const [contentState, setContent]=useState('home');
   const [username, setUsername] = useState('');
   
   function setPage(page) {
