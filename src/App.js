@@ -7,6 +7,7 @@ import HomeScreen from './HomeScreen';
 import UploadImg from './UploadImg';
 import AccountPage from './AccountPage';
 import ViewPool from './ViewPool';
+import ViewPools from './ViewPools';
 
 import Sketchit from './Sketchit';
 
@@ -27,6 +28,7 @@ function App() {
       'home' : (<HomeScreen />),
       'sketchit' : (<Sketchit poolName={pageData} />),
       'viewPool' : (<ViewPool poolName={pageData} />),
+      'viewPools' : (<ViewPools />),
       'search': (<SearchPage pageData={pageData}/>),
       'uploadImg': (<UploadImg poolName={pageData}/>),
       'accountPage': (<AccountPage />),

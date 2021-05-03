@@ -1,83 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
-import React, { useState, useRef, useEffect, useContext } from 'react';
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
-import Upload from './Upload';
-import UserPool from './UserPool';
-import ImageList from './ImageList'
-import SocketContext from './SocketContext';
+import React, {useState, useContext, useEffect} from 'react';
 import ContentContext from './ContentContext';
+import SocketContext from './SocketContext';
 
-export function ViewPools({}) {
-  const [allPools, setAllPools] = useState({});
-  const [showGrid, setShowGrid] = useState(false)
-  const [showPools, setShowPools] = useState(false)
-  const [poolToShow, setPoolToShow] = useState([])
-  const [currentPool, setCurrentPool] = useState('')
-  
-  const socket = useContext(SocketContext)
-  const [contentState, setContent] = useContext(ContentContext);
-  
-  function getPoolNames(){
-      socket.emit('viewpools', [])
-      setShowPools(!showPools)
-  }
-  
-  function onShowGrid(key, val){
-    setShowGrid(!showGrid)
-    const newArray = [...val]
-    setPoolToShow(newArray)
-    setCurrentPool(key)
-  }
-    useEffect(() => {
-    socket.on('response', (data) => {
-        const newDict= {}
-        Object.entries(data).map(([key, val]) =>
-          newDict[key] = val
-        )
-        setAllPools(newDict)
-        console.log(newDict)
-    });
+function ViewPools({}) {
     
- }, []);
-  
-  return (
-    <div>
-    <button onClick={getPoolNames}>View all pools</button>
-    <h1>{" "}</h1>
-    <div>
-    {showPools === true ? (
-    <div>
-    <div>
-    Click pool name to view images 
-      {
-      Object.entries(allPools).map(([key, val]) =>
-        
-        <div>
-           <button onClick={() => onShowGrid(key, val)}>{key}</button>
+    const [contentState, setContent] = useContext(ContentContext);
+    const socket = useContext(SocketContext);
+    
+    const [poolList, setPoolList] = useState([]);
+    const [initialized, setInit] = useState(false);
+    
+    if (!initialized){
+        socket.emit('viewpools', {});
+        setInit(true);
+    }
+    
+    useEffect(() => {
+        socket.on('response', (data) => {
+            setPoolList(data.poolList);
+            console.log('got pools');
+        });
+    }, []);
+    
+    return (
+        <div className='App-header' style={{width:'80vw', justifyContent:'center'}}>
+            <div className='App-header-row'>
+            
+            <div className='App-header' style={{width:'20%'}}>
+            </div>
+            
+            <div className='App-header' style={{width:'60%', overflow:'auto'}}>
+                {
+                    poolList.map(poolName => (
+                        <button className='Pool-list' onClick={() => setContent('viewPool.'+poolName)}>
+                        <h3>{poolName}</h3>
+                        </button>
+                    ))
+                }
+            </div>
+            
+            <div className='App-header' style={{width:'20%'}}>
+            </div>
+            
+            </div>
         </div>
-        )
-      }
-      </div>
-      
-        <div>
-        {showGrid === true ? (
-              <div>
-              <h1>{" "}</h1>
-              {poolToShow.map(image => (
-              <img src = {image} height="100" width="100" />
-              ))}
-              <button onClick={() => setContent('sketchit.'+currentPool)}>Start Sketching</button>
-              </div>
-        ) : null}
-        </div>
-        </div>
-       ) : null}  
-        
-     </div>
-     </div>
-  );
+    )
 }
 
-export default ViewPools
+export default ViewPools;
