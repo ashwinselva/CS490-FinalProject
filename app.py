@@ -114,6 +114,13 @@ def image_exists(name):
         if image.image_name == name:
             return True
     return False
+    
+def user_exists(username):
+    all_users = User.query.all()
+    for user in all_users:
+        if user.username == username:
+            return True
+    return False
 
 def get_random_images(ammount):
     urls = []
@@ -232,14 +239,13 @@ def on_new_user(data):
     
     sid = request.sid
     
-    result = add_user(username, password)
-    
-    print(result)
-    
-    if result:
-        SOCKETIO.emit('loginSuccess', {'username':username}, room=sid)
+    if(user_exists(username)):
+        SOCKETIO.emit('newUserFailed', {}, room=sid)
     else:
-        SOCKETIO.emit('loginFailed', {}, room=sid)
+        result = add_user(username, password)
+        print(result)
+        SOCKETIO.emit('newUserSuccess', {'username':username}, room=sid)
+
         
 @SOCKETIO.on('viewpools')
 def on_view_pools(data):
