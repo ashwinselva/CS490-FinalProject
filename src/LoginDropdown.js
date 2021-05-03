@@ -1,4 +1,4 @@
-import React, {useState, useRef, useContext} from 'react';
+import React, {useState, useRef, useContext, useEffect} from 'react';
 import SocketContext from './SocketContext';
 
 function LoginDropdown({}) {
@@ -37,6 +37,17 @@ function LoginDropdown({}) {
         setNewUserClicked(true);
         setLoginClicked(false);
     }
+    
+    useEffect(() => {
+    socket.on('loginFailed', (data) => {
+        alert("Invalid login or password.")
+    });
+    
+    socket.on('newUserFailed', (data) => {
+        alert("User already exists.")
+    });
+    
+ }, []);
   
     return (
         <div>
