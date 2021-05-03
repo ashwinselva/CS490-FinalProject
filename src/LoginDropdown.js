@@ -47,7 +47,6 @@ function LoginDropdown({}) {
         alert("User already exists.")
     });
     
-    
  }, []);
   
     return (
