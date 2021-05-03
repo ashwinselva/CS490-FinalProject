@@ -26,15 +26,17 @@ function Search({}) {
     const [option, setOption] = useState("Image Name")
     const [page, setPage] = useContext(ContentContext)
     const [randomImage, setRandom] = useState(false)
-    const [imageNumber, setImageNumber] = useState(0)
+    const imageNumber = useRef(null)
     
     function onSearch() {
         console.log();
         const searchText = searchRef.current.value;
+        if (option == "Random Images"){
+            console.log(searchText)
+        }
         socket.emit('search',{
             searchText: searchText,
             option : option,
-            imageNumber : imageNumber
         });
         var searchString = "search."
         searchString = searchString.concat(searchText)
@@ -51,10 +53,7 @@ function Search({}) {
         }
      }
      
-     const imageCount=(e)=>{
-        setImageNumber(e["value"])
-        console.log(imageNumber)
-     }
+    
     
     
     return (
@@ -63,7 +62,7 @@ function Search({}) {
             <Dropdown onChange={dropVal} style={buttonstyle} options={options} placeholder="Search by" />
         </button>
         {randomImage === true ? (
-            <input ref={searchRef} type="text" placeholder="Enter number of images"/>       
+            <input ref={searchRef} type="text" placeholder="Enter number of images"/> 
             ) : (
             <input ref={searchRef} type="text" />
             )}

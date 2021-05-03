@@ -36,7 +36,6 @@ function SearchPage(props) {
     
     return (
         <div>
-            <Search />
             <button type="button" onClick={onBack}> Back To Homepage </button>
             {resultFound === true ? (
             <div>

@@ -110,12 +110,13 @@ def get_images_by_name(search_text):
 def get_random_images(ammount):
     urls = []
     images = Image.query.all()
-    if len(images) <= ammount:
-        for i in images:
+    for i in images:
             urls.append(image_URL(i.image_url))
-    else:
-        urls = sample(images, ammount)
         
+    if len(images) > ammount:
+        urls = sample(urls, ammount)
+        
+    print(urls)
     return urls
 
 def get_pools(user_name):
@@ -274,6 +275,8 @@ def on_search(data):
         imageData.append(get_images_by_name(searchText))
     elif option == 'Tag':
         imageData.append(get_images(searchText))
+    elif option == 'Random Images':
+        imageData.append(get_random_images(int(searchText)))
         
     print(imageData)
     SOCKETIO.emit('search results', {'imageList' : imageData}, room=sid)
