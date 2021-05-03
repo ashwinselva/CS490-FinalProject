@@ -2,34 +2,13 @@ import React, {useState, useContext} from 'react';
 import UsernameContext from './UsernameContext';
 
 function ImgDrop({
-    poolName
+    poolName,
+    uploadFile,
 }) {
     const [inZone, setInZone] = useState(false);
     const [fileList, setFileList] = useState([]);
     
     const [username, setUsername] = useContext(UsernameContext);
-    
-    function uploadFile(file) {
-        const formData = new FormData();
-        console.log(file);
-        formData.append('myFile', file);
-        formData.append('poolName', poolName);
-        formData.append('username', username);
-        
-        fetch('/saveImage', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-        })
-        .catch(error => {
-            console.error(error)
-        })
-      
-        alert("Upload successful.");
-    }
     
     function handleDragEnter(e) {
         e.preventDefault();
@@ -64,7 +43,7 @@ function ImgDrop({
     }
     
     return (
-        <div className={'imgDrop'}
+        <div className='imgDrop'
             onDragEnter={e => handleDragEnter(e)}
             onDragLeave={e => handleDragLeave(e)}
             onDragOver={e => handleDragOver(e)}
