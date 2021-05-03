@@ -1,4 +1,5 @@
 import os
+import random
 from os import path
 from os import sys
 from flask import Flask, send_from_directory, json, jsonify, request, Response
@@ -106,6 +107,13 @@ def get_images_by_name(search_text):
         if search_text.lower() in image.image_name.lower():
             image_search.append(image_URL(image.image_url))
     return image_search
+    
+def image_exists(name):
+    all_images = Image.query.all()
+    for image in all_images:
+        if image.image_name == name:
+            return True
+    return False
 
 def get_random_images(ammount):
     urls = []
@@ -164,12 +172,19 @@ def upload_image():
     bucket = storage_client.get_bucket(GBUCKET)
     img = request.files['myFile']
     image_name = img.filename
+    if(image_exists(image_name)):
+        index = image_name.rfind('.')
+        image_name = image_name[:index] + '1' + image_name[index:]
+    while(image_exists(image_name)):
+        index = image_name.rfind('.')
+        image_name = image_name[:index-1] + str(int(image_name[index-1])+1) + image_name[index:]
     print(curr_pool_name)
-    add_image(image_name, secure_filename(img.filename), curr_pool_name)
-    img.save(secure_filename(img.filename))
-    blob = bucket.blob(secure_filename(img.filename)) 
-    blob.upload_from_filename(secure_filename(img.filename))
-    os.remove(secure_filename(img.filename))
+    print(image_name)
+    add_image(image_name, image_name, curr_pool_name)
+    img.save(secure_filename(image_name))
+    blob = bucket.blob(secure_filename(image_name)) 
+    blob.upload_from_filename(secure_filename(image_name))
+    os.remove(secure_filename(image_name))
     blob.make_public()
     print(image_URL(secure_filename(img.filename)))
     return(image_URL(secure_filename(img.filename)))
