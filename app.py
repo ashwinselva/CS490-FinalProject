@@ -1,5 +1,4 @@
 import os
-import random
 from os import path
 from os import sys
 from flask import Flask, send_from_directory, json, jsonify, request, Response
@@ -117,6 +116,7 @@ def image_exists(name):
     
 def user_exists(username):
     all_users = User.query.all()
+    print(all_users)
     for user in all_users:
         if user.username == username:
             return True
@@ -228,6 +228,7 @@ def on_login(data):
     else:
         SOCKETIO.emit('loginFailed', {}, room=sid)
     
+    
 @SOCKETIO.on('newUser')
 def on_new_user(data):
     """Triggered when a user adds an account"""
@@ -239,13 +240,13 @@ def on_new_user(data):
     
     sid = request.sid
     
-    if(user_exists(username)):
-        SOCKETIO.emit('newUserFailed', {}, room=sid)
-    else:
+    try:
         result = add_user(username, password)
         print(result)
-        SOCKETIO.emit('newUserSuccess', {'username':username}, room=sid)
-
+        SOCKETIO.emit('newUserSuccess', {'username':username}, room=sid) 
+    except:
+        SOCKETIO.emit('newUserFailed', {}, room=sid)
+        
         
 @SOCKETIO.on('viewpools')
 def on_view_pools(data):
