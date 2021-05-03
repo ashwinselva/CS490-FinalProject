@@ -6,38 +6,16 @@ import UsernameContext from './UsernameContext';
 
 function Upload({
   poolName,
+  changeHandler,
 }) {
   
   const [username, setUsername] = useContext(UsernameContext);
   
-const changeHandler = (event) => {
-  const files = event.target.files
-  const formData = new FormData()
-  console.log(files[0])
-  formData.append('myFile', files[0])
-  formData.append('poolName', poolName)
-  formData.append('username', username)
-  
-  
-  fetch('/saveImage', {
-    method: 'POST',
-    body: formData,
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log(data)
-  })
-  .catch(error => {
-    console.error(error)
-  })
-  
-  alert("Upload successful.");
-  
-};
+
 
   
   return (
-    <div className="App">
+    <div style={{paddingLeft:'75px'}}>
        <input type="file" name="file" onChange={changeHandler} />
     </div>
     

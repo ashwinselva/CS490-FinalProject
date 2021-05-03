@@ -253,14 +253,7 @@ def on_new_user(data):
 def on_view_pools(data):
     sid = request.sid
     all_pools=get_all_pools()
-    pools_and_images = {}
-    for i in all_pools:
-        pools_and_images[i] = get_images(i)
-    #for i in pools_and_images:
-    #    for j in range(len(pools_and_images[i])):
-    #        pools_and_images[i][j] = image_URL(pools_and_images[i][j])
-    print(pools_and_images)
-    SOCKETIO.emit('response', pools_and_images, Broadcast = True, room=sid)
+    SOCKETIO.emit('response', {'poolList' : all_pools}, room=sid)
 
     
 @SOCKETIO.on('fetchPools')
