@@ -43,6 +43,10 @@ function LoginDropdown({}) {
         alert("Invalid login or password.")
     });
     
+    socket.on('newUserFailed', (data) => {
+        alert("User already exists.")
+    });
+    
  }, []);
   
     return (
