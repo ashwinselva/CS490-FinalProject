@@ -5,6 +5,8 @@ import ContextManager from './ContextManager';
 import ToolBar from './ToolBar';
 import HomeScreen from './HomeScreen';
 import UploadImg from './UploadImg';
+import AccountPage from './AccountPage';
+import ViewPool from './ViewPool';
 
 import Sketchit from './Sketchit';
 
@@ -24,9 +26,10 @@ function App() {
     return {
       'home' : (<HomeScreen />),
       'sketchit' : (<Sketchit poolName={pageData} />),
-      'viewPool' : (<div>{pageData}</div>),
+      'viewPool' : (<ViewPool poolName={pageData} />),
       'search': (<SearchPage pageData={pageData}/>),
       'uploadImg': (<UploadImg poolName={pageData}/>),
+      'accountPage': (<AccountPage />),
     } [pageType]
   }
   
