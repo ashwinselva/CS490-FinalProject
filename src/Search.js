@@ -60,7 +60,9 @@ function Search({}) {
         <button type="button" onClick={onSearch}>
             Search
         </button>
+        
         </div>
+        
     )
 }
 

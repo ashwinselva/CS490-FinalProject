@@ -18,6 +18,7 @@ const socket = io(); // Connects to socket connection
 
 var rootStyle = {
   backgroundColor : 'lightyellow',
+  
   height : '100%'
 
 }
@@ -65,10 +66,11 @@ function App() {
       </div>
       
       {setPage(contentState)}
-
     </div>
+ 
     </ContextManager>
     </div>
+    
     );
 }
 

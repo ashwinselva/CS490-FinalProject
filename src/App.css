@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+    background-size: 100%;
+
 }
 
 .App-logo {
@@ -12,6 +14,7 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+
 
 .Image-grid {
   display: flex;
