@@ -38,6 +38,7 @@ function UploadImg({
     }
     
     function sendFile() {
+        alert("Image Uploaded");
         const formData = new FormData();
         formData.append('myFile', image);
         formData.append('poolName', poolName);

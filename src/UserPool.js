@@ -4,7 +4,7 @@ import ImgDrop from "./ImgDrop";
 import ImageList from "./ImageList";
 import SocketContext from "./SocketContext";
 import UsernameContext from './UsernameContext';
-
+import "./style.css";
 export default function UserPool({}){
     const [viewMode, setView] = useState(false);
     const inputRef = useRef(null);
@@ -71,7 +71,7 @@ return (
             {isConfirmed === true ? (
                 <div>
                     Displaying {currentPool}
-                    <button type="button" onClick={onShowSelection}>Choose A Different Pool</button>
+                    <button type="button" class="button" onClick={onShowSelection}>Choose A Different Pool</button>
                     <Upload poolName={currentPool} username={username} socket={socket}/>
                     <ImgDrop poolName={currentPool} username={username} socket={socket}/>
                     {waiting === true? (
@@ -84,7 +84,7 @@ return (
             ):(
                 <div>
                     Please enter a name for your pool<input ref={inputRef} type = "text" />
-                    <button type="button" onClick={onConfirmButton}> 
+                    <button type="button" class="button" onClick={onConfirmButton}> 
                     Confirm
                     </button>
                 </div>
@@ -94,12 +94,12 @@ return (
         <div>
             {
                 poolList.map((pool) => (
-                    <button type="button" onClick={() => onPoolSelect(pool)}>
+                    <button type="button" class="button" onClick={() => onPoolSelect(pool)}>
                     {pool}
                     </button>
                 ))
             }
-            <button type="button" onClick={() => onPoolButton()}> 
+            <button class="button" type="button" onClick={() => onPoolButton()}> 
             New Pool 
             </button>
         </div>
