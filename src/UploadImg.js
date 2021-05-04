@@ -2,13 +2,14 @@ import React, {useState, useContext} from 'react';
 import Upload from './Upload';
 import ImgDrop from './ImgDrop';
 import UsernameContext from './UsernameContext';
-
+import ContentContext from './ContentContext';
 
 function UploadImg({
     poolName,
 }) {
     
     const [username, setUsername] = useContext(UsernameContext);
+    const [contentState, setContent] = useContext(ContentContext);
     
     const [image, setImage] = useState(null);
     const [imageUrl, setUrl] = useState('');
@@ -149,7 +150,7 @@ function UploadImg({
             </div>
             <div className='App-header' style={{width:'15%'}}>
             <div style={{width:'100%', display:'flex', justifyContent:'flex-end'}}>
-                <button>Back</button>
+                <button onClick={setContent('viewPool.'+poolName)}>Back</button>
             </div>
             </div>
         </div>

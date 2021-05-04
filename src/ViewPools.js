@@ -37,6 +37,9 @@ function ViewPools({}) {
                         </button>
                     ))
                 }
+                <button className='Pool-list' onClick={() => setContent('createPool')}>
+                <h3>New Pool</h3>
+                </button>
             </div>
             <div className='App-header' style={{width:'20%'}}>
             </div>

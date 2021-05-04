@@ -41,32 +41,11 @@ function ViewPool({
                         <img src={image} style={{width:'200px', height:'200px', borderRadius:'12px', objectFit:'cover'}}/>
                     ))
                 }
-                {
-                    imageList.map(image => (
-                        <img src={image} style={{width:'200px', height:'200px', borderRadius:'12px', objectFit:'cover'}}/>
-                    ))
-                }
-                {
-                    imageList.map(image => (
-                        <img src={image} style={{width:'200px', height:'200px', borderRadius:'12px', objectFit:'cover'}}/>
-                    ))
-                }
-                {
-                    imageList.map(image => (
-                        <img src={image} style={{width:'200px', height:'200px', borderRadius:'12px', objectFit:'cover'}}/>
-                    ))
-                }
-                {
-                    imageList.map(image => (
-                        <img src={image} style={{width:'200px', height:'200px', borderRadius:'12px', objectFit:'cover'}}/>
-                    ))
-                }
-                {
-                    imageList.map(image => (
-                        <img src={image} style={{width:'200px', height:'200px', borderRadius:'12px', objectFit:'cover'}}/>
-                    ))
-                }
-                <button onClick={() => setContent('uploadImg.'+poolName)}>Add Image</button>
+                <button 
+                    className='Grid-button'
+                    style={{width:'195px', height:'195px'}}
+                    onClick={() => setContent('uploadImg.'+poolName)}
+                >Add Image</button>
             </div>
             </div>
             

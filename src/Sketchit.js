@@ -18,14 +18,36 @@ function Sketchit({
     const timer = useTimer( {expiryTimestamp:new Date(), onExpire:() => {nextImage()}} );
     
     function nextImage() {
-        setIndex(prevIndex => prevIndex+1);
         if (imageIndex+1 === imageList.length) {
             setIndex(0);
+        }
+        else {
+            setIndex(prevIndex => prevIndex+1);
         }
         
         const timestamp = new Date();
         timestamp.setSeconds(timestamp.getSeconds() + duration );
         timer.restart(timestamp);
+        if (!startSketchit){
+            timer.pause();
+        }
+        console.log(timer.isRunning);
+    }
+    
+    function prevImage() {
+        if (imageIndex-1 < 0) {
+            setIndex(imageList.length-1);
+        }
+        else{
+            setIndex(prevIndex => prevIndex-1);
+        }
+        
+        const timestamp = new Date();
+        timestamp.setSeconds(timestamp.getSeconds() + duration );
+        timer.restart(timestamp);
+        if (!startSketchit){
+            timer.pause();
+        }
         console.log(timer.isRunning);
     }
     
@@ -81,13 +103,13 @@ function Sketchit({
                     }
                 </div>
                 <div>
-                    <button>Back</button>
+                    <button onClick={prevImage}>Back</button>
                     {startSketchit?(
                         <button onClick={onPauseButton}>Pause</button>
                     ):(
                         <button onClick={onStartButton}>Start</button>
                     )}
-                    <button>Next</button>
+                    <button onClick={nextImage}>Next</button>
                 </div>
             </div>
             <div className='App-header' style={{width:'15%'}}>

@@ -86,3 +86,14 @@ label {
   display: flex;
   align-items: center;
 }
+
+.Grid-button {
+  border: solid;
+  border-width:5px;
+  border-color:Grey;
+  color: Grey;
+  border-radius:12px;
+  font-size: 32px;
+  height: 195px;
+  width: 195px;
+}
