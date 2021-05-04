@@ -40,7 +40,22 @@ function SearchPage(props) {
             {resultFound === true ? (
             <div>
                 <h1> Displaying results for  {props.pageData} </h1>
-                <ImageList imageList={imageUrls} />
+                <div className='App-header' style={{width:'80vw', alignItems:'center'}}>
+                <div className='App-header-row'>
+                <div className='App-header' style={{width:'20%', height:'55vh'}}>
+            </div>
+            
+            <div className='App-header' style={{width:'60%', overflow:'auto', height:'55vh'}}>
+            <div style={{display:'flex', flexDirection:'row',  flexWrap:'wrap'}}>
+                {
+                    imageUrls.map(image => (
+                        <img src={image} style={{width:'200px', height:'200px', borderRadius:'12px', objectFit:'cover'}}/>
+                    ))
+                }
+            </div>
+            </div>
+            </div>
+        </div>
             </div>
             ) : (
                 <h1> No Results Found for {props.pageData} </h1>
