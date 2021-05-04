@@ -21,7 +21,7 @@ function ToolBar({}) {
         <div style = {{ float: 'left', padding: '10px',"margin-left":'30%',"margin-right":'25%'}}>
                 <Search />
             </div>
-        <h4 style={{float: 'right', display: 'inline'}}>
+        <h4 style={{float: 'right', display: 'inline-block'}}>
         {(username === '')?
         (
         <div>

@@ -8,6 +8,7 @@ import UploadImg from './UploadImg';
 import AccountPage from './AccountPage';
 import ViewPool from './ViewPool';
 import ViewPools from './ViewPools';
+import CreatePool from './CreatePool';
 
 import Sketchit from './Sketchit';
 
@@ -32,6 +33,7 @@ function App() {
       'search': (<SearchPage pageData={pageData}/>),
       'uploadImg': (<UploadImg poolName={pageData}/>),
       'accountPage': (<AccountPage />),
+      'createPool' : (<CreatePool />),
     } [pageType]
   }
   
