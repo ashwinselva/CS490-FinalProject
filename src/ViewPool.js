@@ -45,12 +45,8 @@ function ViewPool({
                         <img src={image} style={{width:'200px', height:'200px', borderRadius:'12px', objectFit:'cover'}}/>
                     ))
                 }
-<<<<<<< HEAD
-                <button
-=======
                 {username === owner ? (
                 <button 
->>>>>>> add-image-updated
                     className='Grid-button'
                     style={{width:'195px', height:'195px'}}
                     onClick={() => setContent('uploadImg.'+poolName)}
