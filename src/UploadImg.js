@@ -94,7 +94,7 @@ function UploadImg({
     function toggleTag(tag) {
         const currentTags = tags;
         currentTags[tag] = !tags[tag];
-        setTags([currentTags]);
+        setTags(JSON.parse(JSON.stringify(currentTags)));
         console.log("Current tags: " + tags['Pose'])
         console.log("Current tags: " + tags['Animal'])
         console.log("Current tags: " + tags['Obj'])
