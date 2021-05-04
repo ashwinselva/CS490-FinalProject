@@ -10,6 +10,11 @@ function ToolBar({}) {
     const [username, setUsername] = useContext(UsernameContext);
     const [contentState, setContent] = useContext(ContentContext);
     
+    function onLogout(){
+        setUsername('');
+        setContent('home')
+    }
+    
     return (
         <div>
         <h1 style={{float: 'left', display: 'inline-block'}}>Arachne</h1>
@@ -26,6 +31,7 @@ function ToolBar({}) {
             <div>
             <lable>{username}</lable>
             <button onClick={()=>setContent('accountPage')}>My Pools</button>
+            <button onClick={onLogout}>Logout</button>
             </div>
         )}
         

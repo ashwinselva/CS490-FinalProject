@@ -25,11 +25,10 @@ function ViewPools({}) {
 
     return (
         <div className='App-header' style={{width:'80vw', justifyContent:'center'}}>
+            <button onClick={() => setContent('home')}>Back To Homepage</button>
             <div className='App-header-row'>
-            
             <div className='App-header' style={{width:'20%'}}>
             </div>
-            
             <div className='App-header' style={{width:'60%', overflow:'auto'}}>
                 {
                     poolList.map(poolName => (
@@ -39,10 +38,8 @@ function ViewPools({}) {
                     ))
                 }
             </div>
-            
             <div className='App-header' style={{width:'20%'}}>
             </div>
-            
             </div>
         </div>
     )
