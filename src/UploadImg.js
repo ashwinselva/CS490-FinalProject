@@ -55,13 +55,27 @@ function UploadImg({
             'Scenery',
         ];
         
+        console.log("Current tags: " + tags['Pose'])
+        console.log("Current tags: " + tags['Animal'])
+        console.log("Current tags: " + tags['Obj'])
+        console.log("Current tags: " + tags['Costume'])
+        console.log("Current tags: " + tags['Face'])
+        console.log("Current tags: " + tags['Anatomy'])
+        console.log("Current tags: " + tags['Scenery'])
+        
+        console.log("starting tags: " + sendTags)
+        
         tagNames.forEach(tag => {
             if (tags[tag]){
                 sendTags[sendTags.length] = tag==='Obj'?'Object':tag;
             }
         });
         
+        console.log("added tags: " + sendTags)
+        
         formData.append('tags', sendTags);
+        
+        console.log("sent tags: " + sendTags)
         
         fetch('/saveImage', {
             method: 'POST',
@@ -81,6 +95,13 @@ function UploadImg({
         const currentTags = tags;
         currentTags[tag] = !tags[tag];
         setTags([currentTags]);
+        console.log("Current tags: " + tags['Pose'])
+        console.log("Current tags: " + tags['Animal'])
+        console.log("Current tags: " + tags['Obj'])
+        console.log("Current tags: " + tags['Costume'])
+        console.log("Current tags: " + tags['Face'])
+        console.log("Current tags: " + tags['Anatomy'])
+        console.log("Current tags: " + tags['Scenery'])
     }
     
     return (
