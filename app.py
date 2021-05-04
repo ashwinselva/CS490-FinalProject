@@ -206,7 +206,7 @@ def upload_image():
     print(image_name)
     image_id = add_image(image_name, image_name, curr_pool_name)
     if 'tags' in request.form.keys():
-        tag_list = request.form['tags']
+        tag_list = request.form['tags'].split(',')
         for i in tag_list:
             print(i)
             add_tag(i,image_id)
