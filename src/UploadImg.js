@@ -95,13 +95,6 @@ function UploadImg({
         const currentTags = tags;
         currentTags[tag] = !tags[tag];
         setTags(JSON.parse(JSON.stringify(currentTags)));
-        console.log("Current tags: " + tags['Pose'])
-        console.log("Current tags: " + tags['Animal'])
-        console.log("Current tags: " + tags['Obj'])
-        console.log("Current tags: " + tags['Costume'])
-        console.log("Current tags: " + tags['Face'])
-        console.log("Current tags: " + tags['Anatomy'])
-        console.log("Current tags: " + tags['Scenery'])
     }
     
     return (
