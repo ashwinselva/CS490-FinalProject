@@ -4,8 +4,6 @@ import 'react-dropdown/style.css';
 import SocketContext from './SocketContext';
 import ContentContext from './ContentContext';
 
-
-
 function Search({}) {
     
     const options = [
@@ -26,14 +24,10 @@ function Search({}) {
     const [option, setOption] = useState("Image Name")
     const [page, setPage] = useContext(ContentContext)
     const [randomImage, setRandom] = useState(false)
-    const imageNumber = useRef(null)
-    
+
     function onSearch() {
         console.log();
         const searchText = searchRef.current.value;
-        if (option == "Random Images"){
-            console.log(searchText)
-        }
         socket.emit('search',{
             searchText: searchText,
             option : option,
@@ -53,9 +47,6 @@ function Search({}) {
         }
      }
      
-    
-    
-    
     return (
         <div>
         <button style={buttonstyle}>

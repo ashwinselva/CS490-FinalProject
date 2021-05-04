@@ -91,6 +91,13 @@ def add_tag(tag_name, image_id):
     db.session.add(new_tag)
     db.session.commit()
     return tag_name
+    
+def get_images_by_tag(tag_name):
+    images_with_tag = ImageTag.query.filter_by(tag=tag_name).all()
+    image_search=[]
+    for image in images_with_tag:
+        image_search.append(image_URL(image.image_url))
+    return image_search
         
 def get_images(pool_Name):
     temp = PoolItem.query.filter_by(pool_name=pool_Name).all()
@@ -295,7 +302,7 @@ def on_search(data):
     elif option == 'Image Name':
         imageData.append(get_images_by_name(searchText))
     elif option == 'Tag':
-        imageData.append(get_images(searchText))
+        imageData.append(get_images_by_tag(searchText))
     elif option == 'Random Images':
         imageData.append(get_random_images(int(searchText)))
         

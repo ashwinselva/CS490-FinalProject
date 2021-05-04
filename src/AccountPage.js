@@ -40,6 +40,9 @@ function AccountPage({}) {
                         </button>
                     ))
                 }
+                <button style={{justifyContent:'center'}} className='Pool-list' onClick={() => setContent('createPool')}>
+                <h3>+</h3>
+                </button>
             </div>
             
             <div className='App-header' style={{width:'20%'}}>
