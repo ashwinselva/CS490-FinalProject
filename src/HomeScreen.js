@@ -18,7 +18,8 @@ function HomeScreen({}) {
         <footer class="footer">
         If you're an artist, this is the right place for you.<br />
         We help you find new artistry images designed by other artists.<br /> 
-        Use this platform to find new Design ideas.
+        Use this platform to find new Design ideas.<br />
+        -----by Ashwin Selvendran, Malachi Dube, Dominik Klimczak, Anand Rao, Mithun Manivanan. 
         </footer>
         </div>
         
