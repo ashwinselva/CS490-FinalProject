@@ -1,5 +1,6 @@
 import React, {useState, useRef, useContext, useEffect} from 'react';
 import SocketContext from './SocketContext';
+import "./style.css";
 
 function LoginDropdown({}) {
     
@@ -52,8 +53,8 @@ function LoginDropdown({}) {
     return (
         <div>
         <div>
-            {isLoginClicked?(null):(<button onClick={() => onLoginClick()}>Login</button>)}
-            {isNewUserClicked?(null):(<button onClick={() => onNewUserClick()}>New User</button>)}
+            {isLoginClicked?(null):(<button class="button" onClick={() => onLoginClick()}>Login</button>)}
+            {isNewUserClicked?(null):(<button class="button" onClick={() => onNewUserClick()}>New User</button>)}
             {isLoginClicked||isNewUserClicked?(
                 <div>
                 <br />
@@ -68,9 +69,9 @@ function LoginDropdown({}) {
                 </label>
                 <br />
                 {isLoginClicked?(
-                    <input type="submit" value="Login" onClick={onLoginComplete} />
+                    <input class="button" type="submit" value="Login" onClick={onLoginComplete} />
                 ):(
-                    <input type="submit" value="Create Account" onClick={onNewUserComplete} />
+                    <input class="button" type="submit" value="Create Account" onClick={onNewUserComplete} />
                 )}
                 <br />
                 </div>

@@ -16,6 +16,11 @@ import SearchPage from './SearchPage';
 
 const socket = io(); // Connects to socket connection
 
+var rootStyle = {
+  backgroundColor : 'lightyellow',
+  height : '100%'
+
+}
 
 function App() {
   const [contentState, setContent]=useState('home');
@@ -26,6 +31,7 @@ function App() {
     const pageType = pageValues[0];
     const pageData = pageValues.length==2?pageValues[1]:null;
     return {
+      
       'home' : (<HomeScreen />),
       'sketchit' : (<Sketchit poolName={pageData} />),
       'viewPool' : (<ViewPool poolName={pageData} />),
@@ -45,12 +51,13 @@ function App() {
   }, []);
   
   return (
+    <div style={rootStyle}>
     <ContextManager
       content={[contentState, setContent]}
       username={[username, setUsername]}
       socket={socket}
     >
-    <div className="App">
+    <div className="App" >
     
       <ToolBar />
       
@@ -61,6 +68,7 @@ function App() {
 
     </div>
     </ContextManager>
+    </div>
     );
 }
 
