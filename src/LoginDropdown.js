@@ -17,7 +17,12 @@ function LoginDropdown({}) {
         const password=passwordRef.current.value;
         console.log(username);
         console.log(password);
-        socket.emit('login',{user:username,password:password});
+        if(username.trim()==='' || password.trim()===''){
+            alert('Please enter a username and password.');
+        }
+        else{
+            socket.emit('login',{user:username,password:password});
+        }
     }
     
     function onNewUserComplete(){
@@ -25,7 +30,12 @@ function LoginDropdown({}) {
         const password=passwordRef.current.value;
         console.log(username);
         console.log(password);
-        socket.emit('newUser',{user:username,password:password});
+        if(username.trim()==='' || password.trim()===''){
+            alert('Please enter a username and password.');
+        }
+        else{
+            socket.emit('newUser',{user:username,password:password});
+        }
     }
     
     
