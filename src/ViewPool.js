@@ -2,6 +2,8 @@ import React, {useContext, useState, useEffect} from 'react';
 import UsernameContext from './UsernameContext';
 import ContentContext from './ContentContext';
 import SocketContext from './SocketContext';
+import "./style.css";
+
 
 function ViewPool({
     poolName,
@@ -41,7 +43,7 @@ function ViewPool({
                         <img src={image} style={{width:'200px', height:'200px', borderRadius:'12px', objectFit:'cover'}}/>
                     ))
                 }
-                <button 
+                <button
                     className='Grid-button'
                     style={{width:'195px', height:'195px'}}
                     onClick={() => setContent('uploadImg.'+poolName)}
@@ -50,8 +52,8 @@ function ViewPool({
             </div>
             
             <div className='App-header' style={{width:'20%', height:'55vh'}}>
-                <button onClick={() => setContent('sketchit.'+poolName)}>Start Sketching!</button>
-                <button onClick={() => setContent('viewPools')}>Back</button>
+                <button class="button" onClick={() => setContent('sketchit.'+poolName)}>Start Sketching!</button><br />
+                <button class="button" onClick={() => setContent('viewPools')}>Back</button>
             </div>
             
             </div>
