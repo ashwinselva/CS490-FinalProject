@@ -184,6 +184,7 @@ def index(filename):
 @app.route('/saveImage', methods=['POST'])
 def upload_image():
     print('image received')
+    print(request.form['tags'])
     global GBUCKET
     curr_pool_name = ''
     if 'poolName' in request.form.keys():
@@ -203,7 +204,12 @@ def upload_image():
         image_name = image_name[:index-1] + str(int(image_name[index-1])+1) + image_name[index:]
     print(curr_pool_name)
     print(image_name)
-    add_image(image_name, image_name, curr_pool_name)
+    image_id = add_image(image_name, image_name, curr_pool_name)
+    if 'tags' in request.form.keys():
+        tag_list = request.form['tags'].split(',')
+        for i in tag_list:
+            print(i)
+            add_tag(i,image_id)
     img.save(secure_filename(image_name))
     blob = bucket.blob(secure_filename(image_name)) 
     blob.upload_from_filename(secure_filename(image_name))
