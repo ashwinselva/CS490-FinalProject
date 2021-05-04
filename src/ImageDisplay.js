@@ -10,7 +10,7 @@ function ImageDisplay({
   
   return (
     <div className="ImageDisplay" >
-       <img src={imageURL} style={{width:'200px', height:'200px', borderRadius:'12px', objectFit:'cover'}}/>
+       <img src={imageURL} />
     </div>
     
   );
