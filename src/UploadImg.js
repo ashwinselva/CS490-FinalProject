@@ -150,7 +150,7 @@ function UploadImg({
             </div>
             <div className='App-header' style={{width:'15%'}}>
             <div style={{width:'100%', display:'flex', justifyContent:'flex-end'}}>
-                <button onClick={setContent('viewPool.'+poolName)}>Back</button>
+                <button onClick={() => setContent('viewPool.'+poolName)}>Back</button>
             </div>
             </div>
         </div>
