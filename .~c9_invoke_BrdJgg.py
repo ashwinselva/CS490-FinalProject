@@ -156,14 +156,6 @@ def get_all_pools():
         pools.append(i.pool_name)
     return pools
 
-def get_owner(poolName):
-    temp = Pool.query.all()
-    owner = ''
-    for pool in temp:
-        if pool.pool_name == poolName:
-            owner = pool.username
-            break
-    return owner
 
 def image_URL(image_url):
     global GBUCKET
@@ -282,7 +274,7 @@ def on_fetch_pools(data):
 def on_fetch_images(data):
     sid = request.sid
     response = get_images(str(data['pool']))
-    SOCKETIO.emit('list images', {'imageList' : response, 'owner': get_owner(data['pool'])}, room=sid)
+    SOCKETIO.emit('list images', {'imageList' : response, ''}, room=sid)
     print('fetched images')
     
 @SOCKETIO.on('newPool')
