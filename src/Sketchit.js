@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import ContentContext from './ContentContext';
 import SocketContext from './SocketContext';
 import { useTimer } from 'react-timer-hook';
+import "./style.css";
 
 function Sketchit({
     poolName
@@ -103,18 +104,18 @@ function Sketchit({
                     }
                 </div>
                 <div>
-                    <button onClick={prevImage}>Back</button>
+                    <button class="button" onClick={prevImage}>Back</button>
                     {startSketchit?(
-                        <button onClick={onPauseButton}>Pause</button>
+                        <button class="button" onClick={onPauseButton}>Pause</button>
                     ):(
-                        <button onClick={onStartButton}>Start</button>
+                        <button class="button" onClick={onStartButton}>Start</button>
                     )}
-                    <button onClick={nextImage}>Next</button>
+                    <button class="button" onClick={nextImage}>Next</button>
                 </div>
             </div>
             <div className='App-header' style={{width:'15%'}}>
-                <button onClick={onCloseButton}>Close</button>
-                <button>Settings</button>
+                <button class="button" onClick={onCloseButton}>Close</button>
+                <button class="button">Settings</button>
             </div>
         </div>
     )
