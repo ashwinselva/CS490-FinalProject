@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from 'react';
 import ContentContext from './ContentContext';
 import SocketContext from './SocketContext';
-
+import "./style.css";
 function ViewPools({}) {
     
     const [contentState, setContent] = useContext(ContentContext);
@@ -25,7 +25,7 @@ function ViewPools({}) {
 
     return (
         <div className='App-header' style={{width:'80vw', justifyContent:'center'}}>
-            <button onClick={() => setContent('home')}>Back To Homepage</button>
+            <button class="button" onClick={() => setContent('home')}>Back To Homepage</button>
             <div className='App-header-row'>
             <div className='App-header' style={{width:'20%'}}>
             </div>

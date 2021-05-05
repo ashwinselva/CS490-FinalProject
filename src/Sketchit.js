@@ -133,9 +133,9 @@ function Sketchit({
                     {!waiting?(
                     optionsVisible?(
                         <div className='Sketchit-options'>
-                        <label>Timer: <input type='number' ref={durationRef}/>
-                        <button onClick={() => setDuration(durationRef.current.value)}>Confirm</button></label>
-                        <button onClick={() => {setOptions(false); setStart(true)}}>Close</button>
+                        <label><h3>Timer: </h3><input type='number' ref={durationRef}/>
+                        <button class="button" onClick={() => setDuration(durationRef.current.value)}>Confirm</button></label>
+                        <button class="button" onClick={() => {setOptions(false); setStart(true)}}>Close</button>
                         </div>
                     ):(
                         <img src={imageList[imageIndex]} style={{objectFit:'contain', width:'100%', height:'100%'}}/>
@@ -155,8 +155,6 @@ function Sketchit({
                 </div>
             </div>
             <div className='App-header' style={{width:'15%'}}>
-                <button class="button" onClick={onCloseButton}>Close</button>
-                <button class="button">Settings</button>
                 <button class="button" onClick={onCloseButton}>Close</button>
                 <button class="button" onClick={() => {setOptions(true); setStart(false);}}>Settings</button>
             </div>
