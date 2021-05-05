@@ -93,10 +93,13 @@ def add_tag(tag_name, image_id):
     return tag_name
     
 def get_images_by_tag(tag_name):
+    print("tag search")
     images_with_tag = ImageTag.query.filter_by(tag=tag_name).all()
+    print(images_with_tag)
     image_search=[]
     for image in images_with_tag:
-        image_search.append(image_URL(image.image_url))
+        image_search.append(image_URL(Image.query.get(image.image_id).image_url))
+        print(image_search)
     return image_search
         
 def get_images(pool_Name):

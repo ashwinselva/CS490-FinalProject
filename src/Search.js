@@ -76,6 +76,7 @@ function Search({}) {
      
      function onTag(){
          const searchText = Tag
+         console.log(searchText)
          socket.emit('search',{
             searchText: searchText,
             option : option,
