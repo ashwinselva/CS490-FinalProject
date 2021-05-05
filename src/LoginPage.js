@@ -1,17 +1,20 @@
-import React, {useState, useRef, useContext, useEffect} from 'react';
+import React, {useContext, useState, useRef} from 'react';
+import ViewPools from './ViewPools';
+import ContentContext from './ContentContext';
 import SocketContext from './SocketContext';
 import "./style.css";
 
-function LoginDropdown({}) {
+function LoginPage({}) {
     
+    const [contentState, setContent] = useContext(ContentContext);
     const socket = useContext(SocketContext);
     
     const [isLoginClicked,setLoginClicked]=useState(false);
     const [isNewUserClicked,setNewUserClicked]=useState(false);
     
     const usernameRef = useRef(null); 
-    const passwordRef = useRef(null); 
-
+    const passwordRef = useRef(null);
+    
     function onLoginComplete(){
         const username=usernameRef.current.value;
         const password=passwordRef.current.value;
@@ -22,6 +25,7 @@ function LoginDropdown({}) {
         }
         else{
             socket.emit('login',{user:username,password:password});
+            setContent('home');
         }
     }
     
@@ -35,13 +39,15 @@ function LoginDropdown({}) {
         }
         else{
             socket.emit('newUser',{user:username,password:password});
+            setContent('home');
         }
+        
     }
-    
     
     function onLoginClick() {
         setLoginClicked(true);
         setNewUserClicked(false);
+        
     }
     
     function onNewUserClick() {
@@ -49,24 +55,14 @@ function LoginDropdown({}) {
         setLoginClicked(false);
     }
     
-    useEffect(() => {
-    socket.on('loginFailed', (data) => {
-        alert("Invalid login or password.")
-    });
-    
-    socket.on('newUserFailed', (data) => {
-        alert("User already exists.")
-    });
-    
- }, []);
-  
     return (
-        <div style={{display:'flex', flexDirection: 'row', height:'80%', justifyContent:'center'}}>
+        <div  style={{textAlign:'center', alignItems:'center', backgroundColor:'white', display:'flex', width:'100%', height:'80vh', justifyContent:'center'}}>
         
-            {isLoginClicked?(null):(<button class="button" onClick={() => onLoginClick()}>Login</button>)}
-            {isNewUserClicked?(null):(<button class="button" onClick={() => onNewUserClick()}>New User</button>)}
+        <div>
+        {isLoginClicked?(null):(<button class="button" onClick={() => onLoginClick()}>Login</button>)}
+        {isNewUserClicked?(null):(<button class="button" onClick={() => onNewUserClick()}>New User</button>)}
             {isLoginClicked||isNewUserClicked?(
-                <div>
+                <div >
                 <br />
                 <label>
                     Login-ID
@@ -85,10 +81,11 @@ function LoginDropdown({}) {
                 )}
                 <br />
                 </div>
-            ):(null)
-            }
+        ):(null)}
         </div>
+        </div>
+        
     )
 }
 
-export default LoginDropdown;
+export default LoginPage;

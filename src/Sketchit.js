@@ -92,18 +92,19 @@ function Sketchit({
     }
     
     
-    useEffect(() => {
-        console.log(duration);
+    function onTimerConfirmButton(newDuration){
+        setDuration(parseInt(newDuration));
+        console.log(newDuration);
         if (!waiting){
             const timestamp = new Date();
-            timestamp.setSeconds(timestamp.getSeconds() + parseInt(duration) );
+            timestamp.setSeconds(timestamp.getSeconds() + parseInt(newDuration));
             timer.restart(timestamp);
             if (!startSketchit){
                 timer.pause();
             }
             console.log(timer.isRunning);
         }
-    }, [duration])
+    }
     
     useEffect(() => {
         if(startSketchit === true && !timer.isRunning) {
@@ -133,9 +134,9 @@ function Sketchit({
                     {!waiting?(
                     optionsVisible?(
                         <div className='Sketchit-options'>
-                        <label><h3>Timer: </h3><input type='number' ref={durationRef}/>
-                        <button class="button" onClick={() => setDuration(durationRef.current.value)}>Confirm</button></label>
-                        <button class="button" onClick={() => {setOptions(false); setStart(true)}}>Close</button>
+                        <label>Timer: <input type='number' ref={durationRef}/>
+                        <button onClick={() => onTimerConfirmButton(durationRef.current.value)}>Confirm</button></label>
+                        <button onClick={() => {setOptions(false); setStart(true)}}>Close</button>
                         </div>
                     ):(
                         <img src={imageList[imageIndex]} style={{objectFit:'contain', width:'100%', height:'100%'}}/>

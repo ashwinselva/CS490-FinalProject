@@ -9,6 +9,7 @@ import AccountPage from './AccountPage';
 import ViewPool from './ViewPool';
 import ViewPools from './ViewPools';
 import CreatePool from './CreatePool';
+import LoginPage from './LoginPage';
 
 import Sketchit from './Sketchit';
 
@@ -17,9 +18,9 @@ import SearchPage from './SearchPage';
 const socket = io(); // Connects to socket connection
 
 var rootStyle = {
-  backgroundColor : 'lightyellow',
+  backgroundColor : 'LightSlateGray',
   
-  height : '100%'
+  minHeight : '100vh'
 
 }
 
@@ -41,6 +42,7 @@ function App() {
       'uploadImg': (<UploadImg poolName={pageData}/>),
       'accountPage': (<AccountPage />),
       'createPool' : (<CreatePool />),
+      'login' : (<LoginPage />)
     } [pageType]
   }
   
