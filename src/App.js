@@ -19,7 +19,7 @@ const socket = io(); // Connects to socket connection
 var rootStyle = {
   backgroundColor : 'LightSlateGray',
   
-  height : '100%'
+  minHeight : '100vh'
 
 }
 

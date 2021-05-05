@@ -22,7 +22,8 @@ function ToolBar({}) {
         </button>
         <div style = {{display:'flex', padding: '20px'}}>
                 <Search />
-            </div>
+                <button style={{height:'60%', margin:'8px'}} onClick={() => setContent('viewPools')}>View All Pools</button>
+        </div>
         <div style={{display: 'flex', flexDirection:'row', padding:'20px'}}>
         {(username === '')?
         (
