@@ -23,4 +23,4 @@
 7. Push to Heroku: `git push heroku main`
 
 ## Heroku Link
-https://stormy-ravine-58863.herokuapp.com/ 
+https://morning-tundra-46477.herokuapp.com/
