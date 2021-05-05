@@ -28,11 +28,12 @@ function ToolBar({}) {
         {(username === '')?
         (
             <div style={{display:'flex', flexDirection: 'row'}}>
-            <LoginDropdown />
+            <button className="button" onClick={() => setContent('login')}>Login</button>
             </div>
         ):(
             <div style={{display:'flex', flexDirection: 'row'}}>
-            <lable>{username}</lable>
+            <label style={{color:'white', fontSize:'24px', margin:'0px 10px'}}>{username}</label>
+
             <button onClick={()=>setContent('accountPage')}>My Pools</button>
             <button onClick={logOut}>Logout</button>
             </div>

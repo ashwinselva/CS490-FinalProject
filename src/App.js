@@ -9,6 +9,7 @@ import AccountPage from './AccountPage';
 import ViewPool from './ViewPool';
 import ViewPools from './ViewPools';
 import CreatePool from './CreatePool';
+import LoginPage from './LoginPage';
 
 import Sketchit from './Sketchit';
 
@@ -41,6 +42,7 @@ function App() {
       'uploadImg': (<UploadImg poolName={pageData}/>),
       'accountPage': (<AccountPage />),
       'createPool' : (<CreatePool />),
+      'login' : (<LoginPage />)
     } [pageType]
   }
   
