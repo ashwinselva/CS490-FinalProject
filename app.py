@@ -163,6 +163,10 @@ def get_owner(pool_name):
 def image_url_url(image_url):
     global GBUCKET
     return 'https://storage.googleapis.com/' + GBUCKET + '/' + image_url
+    
+def get_bucket_name():
+    global GBUCKET
+    return GBUCKET
 
 def check_login(username, password):
     query = User.query.filter_by(username=username).first()
@@ -191,16 +195,7 @@ def upload_image():
     bucket = storage_client.get_bucket(GBUCKET)
     img = request.files['myFile']
     image_name = img.filename
-<<<<<<< HEAD
     image_name = format_image(image_name)
-=======
-    if image_exists(image_name):
-        index = image_name.rfind('.')
-        image_name = image_name[:index] + '1' + image_name[index:]
-    while image_exists(image_name):
-        index = image_name.rfind('.')
-        image_name = image_name[:index-1] + str(int(image_name[index-1])+1) + image_name[index:]
->>>>>>> 406d07c8dba885493f34fcd72ccf62f8738ea882
     print(curr_pool_name)
     print(image_name)
     image_id = add_image(image_name, image_name, curr_pool_name)
@@ -218,7 +213,6 @@ def upload_image():
     return image_url_url(secure_filename(img.filename))
 
 
-<<<<<<< HEAD
 def format_image(image_name):
     if(image_exists(image_name)):
         index = image_name.rfind('.')
@@ -228,8 +222,6 @@ def format_image(image_name):
         image_name = image_name[:index-1] + str(int(image_name[index-1])+1) + image_name[index:]
     return image_name
     
-=======
->>>>>>> 406d07c8dba885493f34fcd72ccf62f8738ea882
 @SOCKETIO.on('connect')
 def on_connect():
     """Triggered when a user connects"""
