@@ -61,8 +61,8 @@ function LoginDropdown({}) {
  }, []);
   
     return (
-        <div>
-        <div>
+        <div style={{display:'flex', flexDirection: 'row', height:'80%', justifyContent:'center'}}>
+        
             {isLoginClicked?(null):(<button class="button" onClick={() => onLoginClick()}>Login</button>)}
             {isNewUserClicked?(null):(<button class="button" onClick={() => onNewUserClick()}>New User</button>)}
             {isLoginClicked||isNewUserClicked?(
@@ -87,7 +87,6 @@ function LoginDropdown({}) {
                 </div>
             ):(null)
             }
-        </div>
         </div>
     )
 }

@@ -17,7 +17,7 @@ import SearchPage from './SearchPage';
 const socket = io(); // Connects to socket connection
 
 var rootStyle = {
-  backgroundColor : 'lightyellow',
+  backgroundColor : 'LightSlateGray',
   
   height : '100%'
 

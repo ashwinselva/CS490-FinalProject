@@ -16,26 +16,28 @@ function ToolBar({}) {
         setContent('home')
     }
     return (
-        <div>
-        <h1 style={{float: 'left', display: 'inline-block', color:'SkyBlue'}}>Arachne</h1>
-        <div style = {{ float: 'left', padding: '10px',"margin-left":'30%',"margin-right":'25%'}}>
+        <div style={{display:'flex', flexDirection: 'row', width: '100%', alignItems:'stretch',justifyContent:'space-between'}}>
+        <button style={{display: 'flex', color:'#D8EDEE', padding:'0px 20px', backgroundColor:'lightSlateGrey'}} onClick={() => setContent('home')}>
+        <h2 >Arachne</h2>
+        </button>
+        <div style = {{display:'flex', padding: '20px'}}>
                 <Search />
             </div>
-        <h4 style={{float: 'right', display: 'inline-block'}}>
+        <div style={{display: 'flex', flexDirection:'row', padding:'20px'}}>
         {(username === '')?
         (
-        <div>
+            <div style={{display:'flex', flexDirection: 'row'}}>
             <LoginDropdown />
             </div>
         ):(
-            <div>
+            <div style={{display:'flex', flexDirection: 'row'}}>
             <lable>{username}</lable>
             <button onClick={()=>setContent('accountPage')}>My Pools</button>
             <button onClick={logOut}>Logout</button>
             </div>
         )}
         
-        </h4>
+        </div>
         
         </div>
     )
