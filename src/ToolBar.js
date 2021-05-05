@@ -4,6 +4,8 @@ import UserPool from './UserPool';
 import UsernameContext from './UsernameContext';
 import Search from "./Search";
 import ContentContext from './ContentContext';
+import "./style.css";
+
 
 function ToolBar({}) {
     
@@ -21,7 +23,7 @@ function ToolBar({}) {
         <div style = {{ float: 'left', padding: '10px',"margin-left":'30%',"margin-right":'25%'}}>
                 <Search />
             </div>
-        <h4 style={{float: 'right', display: 'inline-block'}}>
+        <h1 style={{float: 'right', display: 'inline-block'}}>
         {(username === '')?
         (
         <div>
@@ -29,13 +31,13 @@ function ToolBar({}) {
             </div>
         ):(
             <div>
-            <lable>{username}</lable>
-            <button onClick={()=>setContent('accountPage')}>My Pools</button>
-            <button onClick={logOut}>Logout</button>
+            <lable >{username}</lable><br />
+            <button class="button" onClick={()=>setContent('accountPage')}>My Pools</button>
+            <button class="button" onClick={logOut}>Logout</button>
             </div>
         )}
         
-        </h4>
+        </h1>
         
         </div>
     )
