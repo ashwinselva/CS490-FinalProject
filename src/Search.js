@@ -82,7 +82,9 @@ function Search({}) {
             searchText: searchText,
             option : option,
         });
-         
+        var searchString = "search."
+        searchString = searchString.concat(searchText)
+        setPage(searchString)
      }
      
     return (
