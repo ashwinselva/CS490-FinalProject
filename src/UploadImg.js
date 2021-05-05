@@ -30,11 +30,19 @@ function UploadImg({
     };
     
     function uploadFile(file) {
-        console.log(file);
-        setImage(file);
-        const imgsrc = URL.createObjectURL(file);
-        setUrl(imgsrc);
-        URL.revokeObjectURL(imageUrl);
+        if(file !== undefined){
+            const extension = file.name.split('.').pop();
+            if(extension === 'jpg' || extension === 'jpeg' || extension === 'png'){
+                console.log(file);
+                setImage(file);
+                const imgsrc = URL.createObjectURL(file);
+                setUrl(imgsrc);
+                URL.revokeObjectURL(imageUrl);
+            }
+            else{
+                alert('Files must be of type jpg, jpeg, or png.');
+            }
+        }
     }
     
     function sendFile() {

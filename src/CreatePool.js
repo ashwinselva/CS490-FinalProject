@@ -2,6 +2,7 @@ import React, {useState, useContext, useEffect, useRef} from 'react';
 import ContentContext from './ContentContext';
 import UsernameContext from './UsernameContext';
 import SocketContext from './SocketContext';
+import "./style.css";
 
 function CreatePool({}) {
     
@@ -20,7 +21,7 @@ function CreatePool({}) {
     return (
         <div >
             Please enter a name for your pool<input ref={poolNameRef} type = "text" />
-            <button type="button" onClick={onConfirmButton}> 
+            <button class="button" type="button" onClick={onConfirmButton}> 
             Confirm
             </button>
         </div>

@@ -3,6 +3,7 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import SocketContext from './SocketContext';
 import ContentContext from './ContentContext';
+import "./style.css";
 
 function Search({}) {
     
@@ -107,7 +108,7 @@ function Search({}) {
             <Dropdown onChange={dropVal} style={buttonstyle} options={options} placeholder="Random Images" />
         </button>
             <input ref={searchRef} type="text" placeholder="Enter number of images"/> 
-            <button type="button" onClick={onSearch}>
+            <button class="button" type="button" onClick={onSearch}>
                 Search
             </button>
         </div>
@@ -121,7 +122,7 @@ function Search({}) {
             <Dropdown onChange={dropVal} style={buttonstyle} options={options} placeholder="Search by" />
         </button>
             <input ref={searchRef} type="text" />
-            <button type="button" onClick={onSearch}>
+            <button class="button "type="button" onClick={onSearch}>
                 Search
             </button>
         </div>
