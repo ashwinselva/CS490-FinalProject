@@ -57,7 +57,7 @@ function ViewPool({
             
             <div className='App-header' style={{width:'20%', height:'55vh'}}>
                 <button class="button" onClick={() => setContent('sketchit.'+poolName)}>Start Sketching!</button><br />
-                <button class="button" onClick={() => setContent('viewPools')}>Back</button>
+                <button class="button" onClick={() => setContent('viewPools')}>Back To Pools</button>
             </div>
             
             </div>
