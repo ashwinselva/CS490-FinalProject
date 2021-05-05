@@ -196,12 +196,7 @@ def upload_image():
     bucket = storage_client.get_bucket(GBUCKET)
     img = request.files['myFile']
     image_name = img.filename
-    if(image_exists(image_name)):
-        index = image_name.rfind('.')
-        image_name = image_name[:index] + '1' + image_name[index:]
-    while(image_exists(image_name)):
-        index = image_name.rfind('.')
-        image_name = image_name[:index-1] + str(int(image_name[index-1])+1) + image_name[index:]
+    image_name = format_image(image_name)
     print(curr_pool_name)
     print(image_name)
     image_id = add_image(image_name, image_name, curr_pool_name)
@@ -218,6 +213,14 @@ def upload_image():
     print(image_URL(secure_filename(img.filename)))
     return(image_URL(secure_filename(img.filename)))
 
+def format_image(image_name):
+    if(image_exists(image_name)):
+        index = image_name.rfind('.')
+        image_name = image_name[:index] + '1' + image_name[index:]
+    while(image_exists(image_name)):
+        index = image_name.rfind('.')
+        image_name = image_name[:index-1] + str(int(image_name[index-1])+1) + image_name[index:]
+    return image_name
     
 @SOCKETIO.on('connect')
 def on_connect():
