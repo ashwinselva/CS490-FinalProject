@@ -93,10 +93,13 @@ def add_tag(tag_name, image_id):
     return tag_name
     
 def get_images_by_tag(tag_name):
+    print("tag search")
     images_with_tag = ImageTag.query.filter_by(tag=tag_name).all()
+    print(images_with_tag)
     image_search=[]
     for image in images_with_tag:
-        image_search.append(image_URL(image.image_url))
+        image_search.append(image_URL(Image.query.get(image.image_id).image_url))
+        print(image_search)
     return image_search
         
 def get_images(pool_Name):
@@ -156,6 +159,14 @@ def get_all_pools():
         pools.append(i.pool_name)
     return pools
 
+def get_owner(poolName):
+    temp = Pool.query.all()
+    owner = ''
+    for pool in temp:
+        if pool.pool_name == poolName:
+            owner = pool.username
+            break
+    return owner
 
 def image_URL(image_url):
     global GBUCKET
@@ -176,6 +187,7 @@ def index(filename):
 @app.route('/saveImage', methods=['POST'])
 def upload_image():
     print('image received')
+    print(request.form['tags'])
     global GBUCKET
     curr_pool_name = ''
     if 'poolName' in request.form.keys():
@@ -195,7 +207,12 @@ def upload_image():
         image_name = image_name[:index-1] + str(int(image_name[index-1])+1) + image_name[index:]
     print(curr_pool_name)
     print(image_name)
-    add_image(image_name, image_name, curr_pool_name)
+    image_id = add_image(image_name, image_name, curr_pool_name)
+    if 'tags' in request.form.keys():
+        tag_list = request.form['tags'].split(',')
+        for i in tag_list:
+            print(i)
+            add_tag(i,image_id)
     img.save(secure_filename(image_name))
     blob = bucket.blob(secure_filename(image_name)) 
     blob.upload_from_filename(secure_filename(image_name))
@@ -274,7 +291,7 @@ def on_fetch_pools(data):
 def on_fetch_images(data):
     sid = request.sid
     response = get_images(str(data['pool']))
-    SOCKETIO.emit('list images', {'imageList' : response}, room=sid)
+    SOCKETIO.emit('list images', {'imageList' : response, 'owner': get_owner(data['pool'])}, room=sid)
     print('fetched images')
     
 @SOCKETIO.on('newPool')

@@ -15,6 +15,7 @@ function ViewPool({
     
     const [imageList, setImages] = useState([]);
     const [initialized, setInit] = useState(false);
+    const [owner, setOwner] = useState('');
     
     if (!initialized){
         socket.emit('fetchImages', {pool:poolName});
@@ -24,6 +25,7 @@ function ViewPool({
     useEffect(() => {
         socket.on('list images', (data) => {
             setImages(data.imageList);
+            setOwner(data.owner)
             data.imageList.map((image) => console.log(image));
         });
     }, []);
@@ -43,17 +45,19 @@ function ViewPool({
                         <img src={image} style={{width:'200px', height:'200px', borderRadius:'12px', objectFit:'cover'}}/>
                     ))
                 }
-                <button
+                {username === owner ? (
+                <button 
                     className='Grid-button'
                     style={{width:'195px', height:'195px'}}
                     onClick={() => setContent('uploadImg.'+poolName)}
                 >Add Image</button>
+                ) : null}
             </div>
             </div>
             
             <div className='App-header' style={{width:'20%', height:'55vh'}}>
                 <button class="button" onClick={() => setContent('sketchit.'+poolName)}>Start Sketching!</button><br />
-                <button class="button" onClick={() => setContent('viewPools')}>Back</button>
+                <button class="button" onClick={() => setContent('viewPools')}>Back To Pools</button>
             </div>
             
             </div>

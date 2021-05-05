@@ -30,14 +30,23 @@ function UploadImg({
     };
     
     function uploadFile(file) {
-        console.log(file);
-        setImage(file);
-        const imgsrc = URL.createObjectURL(file);
-        setUrl(imgsrc);
-        URL.revokeObjectURL(imageUrl);
+        if(file !== undefined){
+            const extension = file.name.split('.').pop();
+            if(extension === 'jpg' || extension === 'jpeg' || extension === 'png'){
+                console.log(file);
+                setImage(file);
+                const imgsrc = URL.createObjectURL(file);
+                setUrl(imgsrc);
+                URL.revokeObjectURL(imageUrl);
+            }
+            else{
+                alert('Files must be of type jpg, jpeg, or png.');
+            }
+        }
     }
     
     function sendFile() {
+        alert("Image Uploaded");
         const formData = new FormData();
         formData.append('myFile', image);
         formData.append('poolName', poolName);
@@ -54,13 +63,27 @@ function UploadImg({
             'Scenery',
         ];
         
+        console.log("Current tags: " + tags['Pose'])
+        console.log("Current tags: " + tags['Animal'])
+        console.log("Current tags: " + tags['Obj'])
+        console.log("Current tags: " + tags['Costume'])
+        console.log("Current tags: " + tags['Face'])
+        console.log("Current tags: " + tags['Anatomy'])
+        console.log("Current tags: " + tags['Scenery'])
+        
+        console.log("starting tags: " + sendTags)
+        
         tagNames.forEach(tag => {
             if (tags[tag]){
                 sendTags[sendTags.length] = tag==='Obj'?'Object':tag;
             }
         });
         
+        console.log("added tags: " + sendTags)
+        
         formData.append('tags', sendTags);
+        
+        console.log("sent tags: " + sendTags)
         
         fetch('/saveImage', {
             method: 'POST',
@@ -79,7 +102,7 @@ function UploadImg({
     function toggleTag(tag) {
         const currentTags = tags;
         currentTags[tag] = !tags[tag];
-        setTags([currentTags]);
+        setTags(JSON.parse(JSON.stringify(currentTags)));
     }
     
     return (
