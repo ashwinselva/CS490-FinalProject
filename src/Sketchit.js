@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from 'react';
 import ContentContext from './ContentContext';
 import SocketContext from './SocketContext';
 import { useTimer } from 'react-timer-hook';
+import "./style.css";
 
 function Sketchit({
     poolName
@@ -132,9 +133,9 @@ function Sketchit({
                     {!waiting?(
                     optionsVisible?(
                         <div className='Sketchit-options'>
-                        <label>Timer: <input type='number' ref={durationRef}/>
-                        <button onClick={() => setDuration(durationRef.current.value)}>Confirm</button></label>
-                        <button onClick={() => {setOptions(false); setStart(true)}}>Close</button>
+                        <label><h3>Timer: </h3><input type='number' ref={durationRef}/>
+                        <button class="button" onClick={() => setDuration(durationRef.current.value)}>Confirm</button></label>
+                        <button class="button" onClick={() => {setOptions(false); setStart(true)}}>Close</button>
                         </div>
                     ):(
                         <img src={imageList[imageIndex]} style={{objectFit:'contain', width:'100%', height:'100%'}}/>
@@ -144,18 +145,18 @@ function Sketchit({
                     }
                 </div>
                 <div>
-                    <button onClick={prevImage}>Back</button>
+                    <button class="button" onClick={prevImage}>Back</button>
                     {startSketchit?(
-                        <button onClick={onPauseButton}>Pause</button>
+                        <button class="button" onClick={onPauseButton}>Pause</button>
                     ):(
-                        <button onClick={onStartButton}>Start</button>
+                        <button class="button" onClick={onStartButton}>Start</button>
                     )}
-                    <button onClick={nextImage}>Next</button>
+                    <button class="button" onClick={nextImage}>Next</button>
                 </div>
             </div>
             <div className='App-header' style={{width:'15%'}}>
-                <button onClick={onCloseButton}>Close</button>
-                <button onClick={() => {setOptions(true); setStart(false);}}>Settings</button>
+                <button class="button" onClick={onCloseButton}>Close</button>
+                <button class="button" onClick={() => {setOptions(true); setStart(false);}}>Settings</button>
             </div>
         </div>
     )
