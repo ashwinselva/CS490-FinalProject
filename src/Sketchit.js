@@ -91,18 +91,19 @@ function Sketchit({
     }
     
     
-    useEffect(() => {
-        console.log(duration);
+    function onTimerConfirmButton(newDuration){
+        setDuration(parseInt(newDuration));
+        console.log(newDuration);
         if (!waiting){
             const timestamp = new Date();
-            timestamp.setSeconds(timestamp.getSeconds() + parseInt(duration) );
+            timestamp.setSeconds(timestamp.getSeconds() + parseInt(newDuration));
             timer.restart(timestamp);
             if (!startSketchit){
                 timer.pause();
             }
             console.log(timer.isRunning);
         }
-    }, [duration])
+    }
     
     useEffect(() => {
         if(startSketchit === true && !timer.isRunning) {
@@ -133,7 +134,7 @@ function Sketchit({
                     optionsVisible?(
                         <div className='Sketchit-options'>
                         <label>Timer: <input type='number' ref={durationRef}/>
-                        <button onClick={() => setDuration(durationRef.current.value)}>Confirm</button></label>
+                        <button onClick={() => onTimerConfirmButton(durationRef.current.value)}>Confirm</button></label>
                         <button onClick={() => {setOptions(false); setStart(true)}}>Close</button>
                         </div>
                     ):(
