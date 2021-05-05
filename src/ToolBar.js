@@ -20,7 +20,7 @@ function ToolBar({}) {
     return (
         <div style={{display:'flex', flexDirection: 'row', width: '100%', alignItems:'stretch',justifyContent:'space-between'}}>
         <button style={{display: 'flex', color:'#D8EDEE', padding:'0px 20px', backgroundColor:'lightSlateGrey'}} onClick={() => setContent('home')}>
-        <h2 >Arachne</h2>
+        <h1 style={{margin:'17px 0px'}}>Arachne</h1>
         </button>
         <div style = {{display:'flex', padding: '20px'}}>
                 <Search />

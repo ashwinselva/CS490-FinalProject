@@ -25,7 +25,6 @@ function ViewPools({}) {
 
     return (
         <div className='App-header' style={{width:'80vw', justifyContent:'center'}}>
-            <button class="button" onClick={() => setContent('home')}>Back To Homepage</button>
             <div className='App-header-row'>
             <div className='App-header' style={{width:'20%'}}>
             </div>

@@ -57,19 +57,20 @@
 
 .Pool-list {
   border: none;
-  color: DarkGrey;
+  color: #314D67;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
   display: flex;
   width:100%;
+  margin: 10px 0px;
 }
 
 .Pool-list:hover {
-  background-color: LightGrey;
+  background-color: #D6E9FB;
   border:solid;
   border-width:5px;
-  border-color:DarkGrey;
+  border-color:#314D67;
   border-radius:12px;
 }
 

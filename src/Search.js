@@ -110,7 +110,7 @@ function Search({}) {
             <Dropdown onChange={dropVal} style={buttonstyle} options={options} placeholder="Random Images" />
         </button>
             <input ref={searchRef} type="text" placeholder="Enter number of images"/> 
-            <button class="button" type="button" onClick={onSearch}>
+            <button type="button" onClick={onSearch}>
                 Search
             </button>
         </div>
@@ -124,7 +124,7 @@ function Search({}) {
             <Dropdown onChange={dropVal} style={buttonstyle} options={options} placeholder="Search by" />
         </button>
             <input ref={searchRef} type="text" />
-            <button class="button "type="button" onClick={onSearch}>
+            <button type="button" onClick={onSearch}>
                 Search
             </button>
         </div>

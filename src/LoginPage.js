@@ -58,8 +58,9 @@ function LoginPage({}) {
     return (
         <div  style={{textAlign:'center', alignItems:'center', backgroundColor:'white', display:'flex', width:'100%', height:'80vh', justifyContent:'center'}}>
         
-        <div>
+        <div style={{justifyContent:'center'}}>
         {isLoginClicked?(null):(<button class="button" onClick={() => onLoginClick()}>Login</button>)}
+        <br/>
         {isNewUserClicked?(null):(<button class="button" onClick={() => onNewUserClick()}>New User</button>)}
             {isLoginClicked||isNewUserClicked?(
                 <div >

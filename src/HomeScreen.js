@@ -20,6 +20,10 @@ function HomeScreen({}) {
         <div style={{display:'block',textAlign:'center', width:'100%'}} >
         -----by Ashwin Selvendran, Malachi Dube, Dominik Klimczak, Anand Rao, Mithun Manivanan. 
         </div>
+        <br/>
+        <div style={{display:'block', fontStyle:'italic', textAlign:'center', width:'100%'}} >
+        May your art rival the gods!
+        </div>
         </div>
         </div>
         
