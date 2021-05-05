@@ -3,6 +3,7 @@ import Search from './Search';
 import ContentContext from './ContentContext';
 import SocketContext from './SocketContext';
 import ImageList from './ImageList';
+import "./style.css";
 
 
 function SearchPage(props) {
@@ -36,7 +37,7 @@ function SearchPage(props) {
     
     return (
         <div>
-            <button type="button" onClick={onBack}> Back To Homepage </button>
+            <button class="button" type="button" onClick={onBack}> Back To Homepage </button>
             {resultFound === true ? (
             <div>
                 <h1> Displaying results for  {props.pageData} </h1>

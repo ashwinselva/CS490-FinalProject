@@ -9,7 +9,7 @@ function HomeScreen({}) {
     
     return (
         <div >
-            <button onClick={() => setContent('viewPools')}>View Pools</button>
+            <button class="button" onClick={() => setContent('viewPools')}>View Pools</button>
                <br />
      <br />
       <br />
